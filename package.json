@@ -1,12 +1,17 @@
 {
   "name": "next-trpc-boilerplate",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "author": "Santosh Tharu (https://github.com/er-santosh)",
+  "license": "MIT",
   "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
+    "dev:next": "cross-env NODE_NO_WARNINGS=1 next dev --turbopack",
+    "dev": "run-p dev:*",
+    "build": "cross-env NODE_NO_WARNINGS=1 next build",
+    "start": "cross-env NODE_NO_WARNINGS=1 next start",
+    "build-stats": "cross-env ANALYZE=true pnpm run build",
+    "clean": "rimraf .next .swc out coverage",
     "lint:next": "cross-env NODE_NO_WARNINGS=1 next lint",
     "lint:tjs": "eslint \"**/*.{js,mjs,ts,tsx}\" --cache --cache-strategy=content --cache-location=.eslintjscache --max-warnings 0",
     "lint:css": "stylelint \"**/*.css\" --allow-empty-input --cache --cache-strategy=content --cache-location=.stylelintcache --max-warnings 0",
@@ -40,6 +45,7 @@
     "@commitlint/config-conventional": "^19.8.0",
     "@commitlint/cz-commitlint": "^19.8.0",
     "@eslint/eslintrc": "^3",
+    "@next/bundle-analyzer": "^15.2.3",
     "@tailwindcss/postcss": "^4",
     "@total-typescript/ts-reset": "^0.6.1",
     "@types/node": "^20",
@@ -63,6 +69,7 @@
     "prettier-plugin-embed": "^0.5.0",
     "prettier-plugin-sql": "^0.18.1",
     "prettier-plugin-tailwindcss": "^0.6.11",
+    "rimraf": "^6.0.1",
     "stylelint": "^16.16.0",
     "stylelint-config-standard": "^37.0.0",
     "stylelint-order": "^6.0.4",
@@ -70,7 +77,8 @@
     "stylelint-selector-bem-pattern": "^4.0.1",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "typescript-eslint": "^8.27.0"
+    "typescript-eslint": "^8.27.0",
+    "vitest": "^3.0.9"
   },
   "engines": {
     "node": ">=22.14.0",
@@ -128,6 +136,11 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "sharp"
+    ]
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:storybook/recommended"
     ]
   }
 }
