@@ -53,9 +53,7 @@
   "autoimport.useSemiColon": false,
   "diffEditor.ignoreTrimWhitespace": false,
   "redhat.telemetry.enabled": false,
-  "errorLens.excludeBySource": [
-    "eslint(@typescript-eslint/no-unnecessary-type-assertion)"
-  ],
+  "errorLens.excludeBySource": ["eslint(@typescript-eslint/no-unnecessary-type-assertion)"],
   "explorer.confirmPasteNative": false,
   "cSpell.userWords": [],
   "cSpell.ignoreWords": [],
@@ -85,5 +83,15 @@
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "css.customData": [".vscode/tailwind.json"]
+  "css.customData": [".vscode/tailwind.json"],
+  "cSpell.words": [
+    "commitlint",
+    "eslintcache",
+    "eslintjscache",
+    "eslintmdcache",
+    "luxon",
+    "prettiercache",
+    "stylelintcache",
+    "turbopack"
+  ]
 }

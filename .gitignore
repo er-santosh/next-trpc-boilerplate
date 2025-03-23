@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+tsconfig.tsbuildinfo
+
+# Cache Files
+.eslintcache
+.eslintjscache
+.eslintmdcache
+.stylelintcache
+.prettiercache
