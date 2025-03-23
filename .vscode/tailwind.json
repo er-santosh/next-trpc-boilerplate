@@ -60,6 +60,16 @@
           "url": "https://tailwindcss.com/docs/functions-and-directives#variants"
         }
       ]
+    },
+    {
+      "name": "@custom-variant",
+      "description": "Use the @custom-variant directive to add a custom variant in your project:",
+      "references": [
+        {
+          "name": "Tailwind Documentation",
+          "url": "https://tailwindcss.com/docs/functions-and-directives#custom-variant"
+        }
+      ]
     }
   ]
 }

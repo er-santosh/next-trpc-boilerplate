@@ -14,6 +14,7 @@ const CUSTOM_AT_RULES = [
   'tailwind',
   'variants',
   'theme',
+  'custom-variant',
   // PostCSS-specific at-rules
   'define-mixin',
   'mixin',
@@ -40,6 +41,7 @@ const config = {
     'selector-id-pattern': ONLY_ALLOW_CAMEL_CASE_SELECTORS,
     // Allow Tailwind-based CSS Rules
     'at-rule-no-unknown': [true, { ignoreAtRules: CUSTOM_AT_RULES }],
+    'at-rule-no-deprecated': [true, { ignoreAtRules: CUSTOM_AT_RULES }],
     // Allow the Global CSS Selector
     'selector-pseudo-class-no-unknown': [true, { ignorePseudoClasses: ['global'] }],
     // Enforces the order of the CSS properties to be in alphabetical order
