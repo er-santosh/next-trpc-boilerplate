@@ -128,6 +128,7 @@ const eslintConfig = [
             '/^@/db/',
             '/^@/types/',
             '/^@/styles/',
+            '/^@/public/',
             ['parent', 'sibling', 'index'],
           ],
           alphabetize: { order: 'asc', ignoreCase: true },
