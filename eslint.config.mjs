@@ -2,10 +2,15 @@ import { FlatCompat } from '@eslint/eslintrc';
 import typescriptEslintParser from '@typescript-eslint/parser';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import importHelpers from 'eslint-plugin-import-helpers';
+import jestPlugin from 'eslint-plugin-jest';
+import jestDomPlugin from 'eslint-plugin-jest-dom';
+import jestFormattingPlugin from 'eslint-plugin-jest-formatting';
 import onlyWarn from 'eslint-plugin-only-warn';
+import playwrightPlugin from 'eslint-plugin-playwright';
 import prettierPlugin from 'eslint-plugin-prettier';
 import pluginReact from 'eslint-plugin-react';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
+import testingLibraryPlugin from 'eslint-plugin-testing-library';
 import unusedImports from 'eslint-plugin-unused-imports';
 import globals from 'globals';
 import { dirname } from 'path';
@@ -24,12 +29,13 @@ const eslintConfig = [
   eslintConfigPrettier,
   ...tseslint.configs.recommended,
   {
+    ...pluginReact.configs.flat.recommended,
     languageOptions: {
       ...pluginReact.configs.flat.recommended.languageOptions,
       globals: {
-        ...globals.browser,
-        ...globals.node,
+        ...globals.serviceworker,
       },
+      parser: typescriptEslintParser,
     },
   },
   {
@@ -152,9 +158,49 @@ const eslintConfig = [
     },
   },
   {
-    files: ['**/*.tsx'],
+    files: ['**/*.tsx', '**/{__mocks__,tests,tests-examples}/*.{js,ts}'],
     rules: {
       '@typescript-eslint/explicit-function-return-type': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
+  // Configuration for testing
+  {
+    files: ['**/*.test.ts', '**/*.test.tsx', '**/{__tests__,__mocks__}/*.js'],
+    plugins: {
+      jest: jestPlugin,
+      'jest-formatting': jestFormattingPlugin,
+      'testing-library': testingLibraryPlugin,
+      'jest-dom': jestDomPlugin,
+    },
+    ...jestPlugin.configs['flat/recommended'],
+    ...jestDomPlugin.configs['flat/recommended'],
+    ...jestFormattingPlugin.configs['flat/recommended'],
+    ...testingLibraryPlugin.configs['flat/dom'],
+    rules: {
+      'import/no-extraneous-dependencies': [
+        'error',
+        {
+          devDependencies: true,
+        },
+      ],
+    },
+  },
+  // Configuration for e2e testing (Playwright)
+  {
+    files: ['**/*.spec.ts'],
+    ...playwrightPlugin.configs['flat/recommended'],
+  },
+  // Configuration for TypeScript declaration files
+  {
+    files: ['**/*.d.ts'],
+    rules: {
+      'import/no-extraneous-dependencies': [
+        'error',
+        {
+          devDependencies: true,
+        },
+      ],
     },
   },
   {
