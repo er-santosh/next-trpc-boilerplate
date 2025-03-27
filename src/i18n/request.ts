@@ -2,7 +2,7 @@
 import { hasLocale } from 'next-intl';
 import { getRequestConfig } from 'next-intl/server';
 
-import { siteConfig } from '@/config/app-config';
+import { siteConfig } from '@/configs/app-config';
 
 import { routing } from '@/i18n/routing';
 

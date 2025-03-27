@@ -16,17 +16,11 @@
       "backToHome": "Back to Home"
     }
   },
-  "RootLayout": {
-    "home_link": "Home",
-    "about_link": "About",
-    "guestbook_link": "Guestbook",
-    "portfolio_link": "Portfolio",
-    "sign_in_link": "Sign in",
-    "sign_up_link": "Sign up",
-    "protected_link": "Protected"
-  },
-  "BaseTemplate": {
-    "description": "Next14 is a Starter Next.js boilerplate with NextAuth, i18n, TRPC, Tailwind CSS, and Internationalization support.",
-    "made_with": "Made with"
+  "Components": {
+    "common": {
+      "themeToggler": {
+        "label": "Toggle Dark Mode"
+      }
+    }
   }
 }

@@ -6,8 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { ArrowRightIcon } from 'lucide-react';
 
-import BaseLayout from '@/layouts/base-layout';
-import CenteredLayout from '@/layouts/centered-layout';
+import ErrorLayout from '@/layouts/error-layout';
 
 import AppProvider from '@/providers/app-provider';
 
@@ -26,23 +25,21 @@ const GlobalErrorPage: FC<GlobalErrorPageProps> = ({ params }) => {
     <html lang={params.locale}>
       <body>
         <AppProvider>
-          <BaseLayout>
-            <CenteredLayout>
-              <main className="flex flex-col gap-3 text-center items-center justify-center">
-                <h1 className="text-4xl font-semibold"> 500 </h1>
-                <h1 className="special mt-4">{t('Layouts.error.internalServerError.title')}</h1>
-                <p className="mt-4 max-w-sm text-center text-lg">
-                  {t('Layouts.error.internalServerError.description')}
-                </p>
-                <Button asChild>
-                  <Link href={'/'}>
-                    {t('Layouts.error.backToHome')}
-                    <ArrowRightIcon />
-                  </Link>
-                </Button>
-              </main>
-            </CenteredLayout>
-          </BaseLayout>
+          <ErrorLayout>
+            <main className="flex flex-col gap-3 text-center items-center justify-center">
+              <h1 className="text-4xl font-semibold"> 500 </h1>
+              <h1 className="special mt-4">{t('Layouts.error.internalServerError.title')}</h1>
+              <p className="mt-4 max-w-sm text-center text-lg">
+                {t('Layouts.error.internalServerError.description')}
+              </p>
+              <Button asChild>
+                <Link href={'/'}>
+                  {t('Layouts.error.backToHome')}
+                  <ArrowRightIcon />
+                </Link>
+              </Button>
+            </main>
+          </ErrorLayout>
         </AppProvider>
       </body>
     </html>

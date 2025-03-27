@@ -16,17 +16,11 @@
       "backToHome": "De retour à la maison"
     }
   },
-  "RootLayout": {
-    "home_link": "Accueil",
-    "about_link": "A propos",
-    "guestbook_link": "Livre d'or",
-    "portfolio_link": "Portfolio",
-    "sign_in_link": "Se connecter",
-    "sign_up_link": "S'inscrire",
-    "protected_link": "Page protégée"
-  },
-  "BaseTemplate": {
-    "description": "Code de démarrage pour Next.js avec Tailwind CSS",
-    "made_with": "Fait avec"
+  "Components": {
+    "common": {
+      "themeToggler": {
+        "label": "Activer le mode sombre"
+      }
+    }
   }
 }
