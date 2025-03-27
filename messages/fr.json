@@ -2,5 +2,31 @@
   "Index": {
     "meta_title": "Présentation de Next.js Boilerplate",
     "meta_description": "Next js Boilerplate est le code de démarrage parfait pour votre projet. Construisez votre application React avec le framework Next.js."
+  },
+  "Layouts": {
+    "error": {
+      "notFound": {
+        "title": "La page est introuvable",
+        "description": "Désolé, nous n'avons pas trouvé la page que vous recherchez ! Essayez de recommencer depuis la page d'accueil."
+      },
+      "internalServerError": {
+        "title": "Erreur interne du serveur",
+        "description": "Cette page a généré une erreur irrécupérable."
+      },
+      "backToHome": "De retour à la maison"
+    }
+  },
+  "RootLayout": {
+    "home_link": "Accueil",
+    "about_link": "A propos",
+    "guestbook_link": "Livre d'or",
+    "portfolio_link": "Portfolio",
+    "sign_in_link": "Se connecter",
+    "sign_up_link": "S'inscrire",
+    "protected_link": "Page protégée"
+  },
+  "BaseTemplate": {
+    "description": "Code de démarrage pour Next.js avec Tailwind CSS",
+    "made_with": "Fait avec"
   }
 }

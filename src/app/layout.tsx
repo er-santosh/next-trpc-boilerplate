@@ -1,12 +1,16 @@
 import type { Metadata } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
 import { getLocale, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+
+import BaseLayout from '@/layouts/base-layout';
+
+import AppProvider from '@/providers/app-provider';
 
 import { allLocaleCodes, availableLocalesMap, defaultLocale } from '@/i18n/locales';
 
 import { INTER, OPEN_SANS } from '@/lib/next-fonts';
 import { cn } from '@/lib/utils';
+
 import '@/styles/globals.css';
 
 const fontClasses = cn(OPEN_SANS.variable, INTER.variable);
@@ -24,22 +28,21 @@ export default async function RootLayout({
   const locale = await getLocale();
 
   if (!allLocaleCodes.includes(locale)) {
-    // Forces the current locale to be the Default Locale
     setRequestLocale(defaultLocale.code);
 
-    // when the locale is not listed in the locales, return NotFound
     return notFound();
   }
 
   const { langDir, hrefLang } = availableLocalesMap[locale] || defaultLocale;
 
-  // Configures the current Locale to be the given Locale of the Request
   setRequestLocale(locale);
 
   return (
     <html lang={hrefLang} dir={langDir} suppressHydrationWarning>
       <body className={fontClasses}>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <AppProvider>
+          <BaseLayout>{children}</BaseLayout>
+        </AppProvider>
       </body>
     </html>
   );
