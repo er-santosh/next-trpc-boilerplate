@@ -35,7 +35,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@/public/*": ["./public/*"]
+      "@/public/*": ["./public/*"],
+      "@/messages/*": ["./messages/*"]
     }
   },
   "mdx": {
