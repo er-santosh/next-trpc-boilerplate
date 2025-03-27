@@ -8,11 +8,11 @@ import { routing } from '@/i18n/routing';
 
 const loadLocaleDictionary = async (locale: string): Promise<any> => {
   if (locale === 'en') {
-    return import('@/messages/en.json').then(f => f.default);
+    return import('../../messages/en.json').then(f => f.default);
   }
 
   if (siteConfig.locale.locales.includes(locale)) {
-    return import(`@/messages/${locale}.json`).then(f => f.default);
+    return import(`../../messages/${locale}.json`).then(f => f.default);
   }
 
   throw new Error(`Unsupported locale: ${locale}`);
