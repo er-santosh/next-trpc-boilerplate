@@ -2,7 +2,7 @@ import { availableLocaleCodes, defaultLocale, localePrefix } from '@/i18n/locale
 
 import type { SiteConfig } from '@/types/config';
 
-const site: SiteConfig = {
+const siteConfig: SiteConfig = {
   title: 'Next15 boilerplate with Next Auth and Next Intl',
   description:
     'Next15 is a Starter Next.js boilerplate with NextAuth, i18n, TRPC, Tailwind CSS, and Internationalization support.',
@@ -33,4 +33,4 @@ const site: SiteConfig = {
   },
 };
 
-export default site;
+export default siteConfig;

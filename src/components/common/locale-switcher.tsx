@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
-import { siteConfig } from '@/configs/app-config';
+import siteConfig from '@/configs/site-config';
 
 import { usePathname, useRouter } from '@/i18n/navigation';
 

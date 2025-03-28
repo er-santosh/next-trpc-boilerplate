@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getLocale, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import NextTopLoader from 'nextjs-toploader';
 
 import AppProvider from '@/providers/app-provider';
 
@@ -38,7 +39,10 @@ export default async function RootAppLayout({
   return (
     <html lang={hrefLang} dir={langDir} suppressHydrationWarning>
       <body className={fontClasses}>
-        <AppProvider>{children}</AppProvider>
+        <AppProvider>
+          <NextTopLoader />
+          {children}
+        </AppProvider>
       </body>
     </html>
   );

@@ -73,7 +73,15 @@ const eslintConfig = [
           default: 'array',
         },
       ],
-      '@typescript-eslint/no-unused-vars': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+        },
+      ],
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/consistent-type-imports': 'error',
       '@typescript-eslint/explicit-function-return-type': ['error', { allowExpressions: true }],
@@ -84,7 +92,15 @@ const eslintConfig = [
           objectLiteralTypeAssertions: 'never',
         },
       ],
-      'no-unused-vars': 'error',
+      'no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+        },
+      ],
       'unused-imports/no-unused-imports': 'error',
       'padding-line-between-statements': [
         'error',
@@ -130,6 +146,7 @@ const eslintConfig = [
             '/^@/schemas/',
             '/^@/server/',
             '/^@/db/',
+            '/^@/env/',
             '/^@/types/',
             '/^@/styles/',
             '/^@/public/',
@@ -156,7 +173,7 @@ const eslintConfig = [
     },
   },
   {
-    files: ['**/*.tsx', '**/{__mocks__,tests,tests-examples}/*.{js,ts}'],
+    files: ['**/*.tsx', '**/{__mocks__,tests,tests-examples}/*.{js,ts}', '**/src/app/api/**/*.ts'],
     rules: {
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/no-explicit-any': 'off',

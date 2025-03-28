@@ -19,16 +19,14 @@ const Navbar = () => (
       </div>
       <div className="flex flex-1 items-center justify-end space-x-4">
         <nav className="flex items-center space-x-4">
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="ghost" asChild>
             <Link href={siteConfig.github.repoLink} target="_blank" rel="noreferrer">
               <Github className="h-5 w-5" />
               <span className="sr-only">GitHub</span>
             </Link>
           </Button>
-          <Button variant="default" size="sm" asChild>
-            <Link href={siteConfig.github.repoLink} target="_blank" rel="noreferrer">
-              Get Started
-            </Link>
+          <Button variant="default" asChild>
+            <Link href={'/signin'}>Get Started</Link>
           </Button>
           <ThemeToggler />
           <LocaleSwitcher />

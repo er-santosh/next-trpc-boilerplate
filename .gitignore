@@ -54,3 +54,9 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
+
+# db
+next15-boilerplate.db
+
+# redis
+dump.rdb
