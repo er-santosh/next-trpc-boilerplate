@@ -94,5 +94,8 @@
     "prettiercache",
     "stylelintcache",
     "turbopack"
-  ]
+  ],
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  }
 }

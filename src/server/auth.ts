@@ -2,6 +2,8 @@ import type { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 
 import { type AuthOptions, getServerSession, type Session } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
+import { APP_ROUTES } from '@/constants/app-routes';
+
 import { api } from '@/trpc/server';
 
 import { Logger } from '@/server/api/common/logger';
@@ -17,22 +19,22 @@ export const authConfig: AuthOptions = {
     strategy: 'jwt',
   },
   pages: {
-    signIn: '/signin',
+    signIn: APP_ROUTES.AUTH.SIGN_IN,
   },
   providers: [
     CredentialsProvider({
-      // The name to display on the sign in form (e.g. "Sign in with...")
       name: 'Credentials',
       credentials: {
-        username: { label: 'Username', type: 'text' },
+        email: { label: 'Email', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         if (!credentials) {
           throw new Error('No credentials provided');
         }
+
         // Call an external API endpoint to sign in
-        const result = await api.auth.signIn({ credentials });
+        const result = await api.auth.signIn(credentials);
 
         if (!result) {
           throw new Error('Invalid credentials');

@@ -14,6 +14,11 @@
         "description": "This page has thrown a non-recoverable error."
       },
       "backToHome": "Back to Home"
+    },
+    "dashboard": {
+      "dashboard_link": "Dashboard",
+      "user_profile_link": "Manage your account",
+      "sign_out": "Sign out"
     }
   },
   "Components": {
@@ -21,6 +26,23 @@
       "themeToggler": {
         "label": "Toggle Dark Mode"
       }
+    }
+  },
+  "Pages": {
+    "sign_in": {
+      "meta_title": "Sign in",
+      "meta_description": "Seamlessly sign in to your account with our user-friendly login process."
+    },
+    "sign_up": {
+      "meta_title": "Sign up",
+      "meta_description": "Effortlessly create an account through our intuitive sign-up process."
+    },
+    "dashboard": {
+      "meta_title": "Dashboard",
+      "hello_message": "Hello '<strong'>{email}'</strong'>!"
+    },
+    "user_profile": {
+      "meta_title": "User Profile"
     }
   }
 }

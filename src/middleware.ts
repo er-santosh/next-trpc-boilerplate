@@ -3,13 +3,18 @@ import createMiddleware from 'next-intl/middleware';
 import type { NextMiddlewareResult } from 'next/dist/server/web/types';
 import { type NextFetchEvent } from 'next/server';
 
+import { APP_ROUTES } from '@/constants/app-routes';
+
 import { createRouteMatcher } from '@/utils/route-matcher';
 
 import { routing } from '@/i18n/routing';
 
 const intlMiddleware = createMiddleware(routing);
 
-const isProtectedRoute = createRouteMatcher(['/dashboard*', '/:locale/dashboard*']);
+const isProtectedRoute = createRouteMatcher([
+  `/${APP_ROUTES.DASHBOARD}*`,
+  `/:locale/${APP_ROUTES.DASHBOARD}*`,
+]);
 
 const authMiddleware = withAuth(
   // Note that this callback is only invoked if

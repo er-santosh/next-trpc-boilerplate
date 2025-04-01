@@ -1,14 +1,26 @@
 import { TRPCError } from '@trpc/server';
 
+import { LoginInputSchema, RegisterInputSchema } from '@/schemas/auth';
+
 import { Logger } from '@/server/api/common/logger';
-import { LoginInput } from '@/server/api/routers/auth/input';
 import { authService } from '@/server/api/routers/auth/service';
-import { type MeQueryResult, type ServerSession } from '@/server/api/routers/auth/types';
+import {
+  type MeQueryResult,
+  type RegisterReturn,
+  type ServerSession,
+} from '@/server/api/routers/auth/types';
 import { createTRPCRouter, protectedProcedure, publicProcedure } from '@/server/api/trpc';
 
 export const authRouter = createTRPCRouter({
+  signUp: publicProcedure
+    .input(RegisterInputSchema)
+    .mutation(
+      async ({ input, ctx }): Promise<RegisterReturn> =>
+        authService.register({ input, headers: ctx.headers })
+    ),
+
   signIn: publicProcedure
-    .input(LoginInput)
+    .input(LoginInputSchema)
     .mutation(
       async ({ input, ctx }): Promise<ServerSession> =>
         authService.login({ input, headers: ctx.headers })

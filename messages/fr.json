@@ -14,6 +14,11 @@
         "description": "Cette page a généré une erreur irrécupérable."
       },
       "backToHome": "De retour à la maison"
+    },
+    "dashboard": {
+      "dashboard_link": "Tableau de bord",
+      "user_profile_link": "Gérer votre compte",
+      "sign_out": "Se déconnecter"
     }
   },
   "Components": {
@@ -21,6 +26,23 @@
       "themeToggler": {
         "label": "Activer le mode sombre"
       }
+    }
+  },
+  "Pages": {
+    "sign_in": {
+      "meta_title": "Se connecter",
+      "meta_description": "Connectez-vous à votre compte avec facilité."
+    },
+    "sign_up": {
+      "meta_title": "S'inscrire",
+      "meta_description": "Créez un compte sans effort grâce à notre processus d'inscription intuitif."
+    },
+    "dashboard": {
+      "meta_title": "Tableau de bord",
+      "hello_message": "Bonjour '<strong'>{email}'</strong'>!"
+    },
+    "user_profile": {
+      "meta_title": "Profil de l'utilisateur"
     }
   }
 }

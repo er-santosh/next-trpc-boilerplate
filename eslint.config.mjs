@@ -67,6 +67,7 @@ const eslintConfig = [
       'promise/prefer-await-to-then': 'off',
       'jsx-a11y/anchor-has-content': 'off',
       'arrow-body-style': ['error', 'as-needed'],
+      '@typescript-eslint/no-empty-object-type': 'off',
       '@typescript-eslint/array-type': [
         'warn',
         {
@@ -229,6 +230,8 @@ const eslintConfig = [
       'typings/*',
       '!.storybook/*',
       'migrations',
+      'playwright-report',
+      'test-results',
     ],
   },
 ];

@@ -1,23 +1,25 @@
-import type { LoginInputType } from '@/server/api/routers/auth/input';
+import type { User } from '@prisma/client';
 
-import type { UserSchemaType } from '@/db/models/schema';
+import type { LoginInputType, RegisterInputType } from '@/schemas/auth';
+
+import type { UserWithoutSensitiveInfo } from '@/server/api/routers/user/types';
 
 export type MeQueryResult = {
   user: ServerSession['user'];
 };
 export type ServerSession = {
-  user: UserSchemaType;
+  user: UserWithoutSensitiveInfo;
   sessionToken: string;
 };
 
 export type AddUserSessionArgs = {
-  userId: UserSchemaType['id'];
+  userId: User['id'];
   sessionToken: string;
   expiresIn: number;
 };
 
 export type DeleteSessionTokenArgs = {
-  userId: UserSchemaType['id'];
+  userId: User['id'];
   sessionToken: string;
 };
 
@@ -28,7 +30,7 @@ export type LogoutArgs = {
 
 export type ValidateSessionTokenArgs = {
   encodedSessionToken: string;
-  userId: UserSchemaType['id'];
+  userId: User['id'];
   headers: Headers;
   validateSessionToken?: boolean;
 };
@@ -53,10 +55,20 @@ export type ValidateUserSessionResult =
 
 export type LogoutAllSessionsArgs = {
   headers: Headers;
-  userId: UserSchemaType['id'];
+  userId: User['id'];
 };
 
 export type LoginArgs = {
   input: LoginInputType;
   headers: Headers;
+};
+
+export type RegisterArgs = {
+  input: RegisterInputType;
+  headers: Headers;
+};
+
+export type RegisterReturn = {
+  user: UserWithoutSensitiveInfo;
+  message: string;
 };

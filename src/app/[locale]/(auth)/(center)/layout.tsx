@@ -1,7 +1,5 @@
 import { type PropsWithChildren } from 'react';
 
-import AuthCenterLayout from '@/layouts/auth-center-layout';
-
-const layout = ({ children }: PropsWithChildren) => <AuthCenterLayout>{children}</AuthCenterLayout>;
+const layout = ({ children }: PropsWithChildren) => <>{children}</>;
 
 export default layout;

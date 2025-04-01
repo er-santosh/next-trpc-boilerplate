@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 
 import siteConfig from '@/configs/site-config';
 
+import { APP_ROUTES } from '@/constants/app-routes';
+
 import { Link } from '@/i18n/navigation';
 
 const Navbar = () => (
@@ -25,8 +27,8 @@ const Navbar = () => (
               <span className="sr-only">GitHub</span>
             </Link>
           </Button>
-          <Button variant="default" asChild>
-            <Link href={'/signin'}>Get Started</Link>
+          <Button asChild>
+            <Link href={APP_ROUTES.AUTH.SIGN_IN}>Get Started</Link>
           </Button>
           <ThemeToggler />
           <LocaleSwitcher />

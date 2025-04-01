@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { User } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import argon2 from 'argon2';
-import { and, eq } from 'drizzle-orm';
 
 import { TimeInSeconds } from '@/server/api/common/enums/time-in-seconds-enum';
 import { createSecureCookie, deleteCookie } from '@/server/api/common/utils/cookie-management';
@@ -11,6 +11,8 @@ import {
   type LoginArgs,
   type LogoutAllSessionsArgs,
   type LogoutArgs,
+  type RegisterArgs,
+  type RegisterReturn,
   type ServerSession,
   type ValidateSessionTokenArgs,
   type ValidateSessionTokenResult,
@@ -18,20 +20,18 @@ import {
 import { userRepository } from '@/server/api/routers/user/repository';
 
 import { db } from '@/db';
-import type { UserSchemaType } from '@/db/models/schema';
-import { UserSchema } from '@/db/models/schema';
 import { redis } from '@/db/redis';
 
 export const SESSION_TOKEN_COOKIE_KEY = 'x-session-token';
 export const USER_ID_COOKIE_KEY = 'x-user-id';
 
 export const SESSION_TOKENS_PREFIX = 'session-tokens:';
-export function getSessionTokensKey(userId: UserSchemaType['id']): string {
+export function getSessionTokensKey(userId: User['id']): string {
   return `${SESSION_TOKENS_PREFIX}${userId}`;
 }
 
 class AuthService {
-  public getSessionTokensKey(userId: UserSchemaType['id']): string {
+  public getSessionTokensKey(userId: User['id']): string {
     return `${SESSION_TOKENS_PREFIX}${userId}`;
   }
 
@@ -77,10 +77,7 @@ class AuthService {
     await redis.zrem(sessionKey, args.sessionToken);
   }
 
-  async checkSessionTokenValidity(
-    userId: UserSchemaType['id'],
-    sessionToken: string
-  ): Promise<boolean> {
+  async checkSessionTokenValidity(userId: User['id'], sessionToken: string): Promise<boolean> {
     const sessionKey = this.getSessionTokensKey(userId);
     const score = await redis.zscore(sessionKey, sessionToken);
     const currentTimestamp = Math.floor(Date.now() / 1000);
@@ -95,7 +92,7 @@ class AuthService {
   }
 
   private async isTokenAboutToExpire(
-    userId: UserSchemaType['id'],
+    userId: User['id'],
     decodedSessionToken: string
   ): Promise<boolean> {
     const sessionKey = this.getSessionTokensKey(userId);
@@ -105,10 +102,7 @@ class AuthService {
     return score !== null && parseInt(score, 10) - currentTimestamp < TimeInSeconds.OneWeek;
   }
 
-  private async renewSessionTokenAndCookies(
-    userId: UserSchemaType['id'],
-    headers: Headers
-  ): Promise<string> {
+  private async renewSessionTokenAndCookies(userId: User['id'], headers: Headers): Promise<string> {
     const expiresIn = 60 * 60 * 24 * 5; // Renew for another 5 days
     const newSessionToken = await this.generateSessionToken(userId);
 
@@ -135,83 +129,93 @@ class AuthService {
     return hashedToken;
   }
 
-  verifyAccessToken(_accessToken: string): Promise<ServerSession['user']> {
-    throw new Error('Method not implemented.');
+  async getActiveUser(email: string): Promise<User | null> {
+    const foundUser = await db.user.findFirst({
+      where: {
+        email,
+        is_active: true,
+      },
+    });
+
+    return foundUser;
   }
 
-  async verifyCredentials(credentials: LoginArgs['input']['credentials']): Promise<{
-    id: string;
-    username: string;
-  }> {
-    const users = await db
-      .select({
-        id: UserSchema.id,
-        username: UserSchema.username,
-      })
-      .from(UserSchema)
-      .where(
-        and(
-          eq(UserSchema.username, credentials.username),
-          eq(UserSchema.password, Buffer.from(credentials.password).toString('base64'))
-        )
-      );
+  async hasPassword(password: string): Promise<string> {
+    return await argon2.hash(password);
+  }
 
-    const foundUser = users[0];
+  async verifyPassword(rawPassword: string, hashedPassword: string): Promise<boolean> {
+    return await argon2.verify(hashedPassword, rawPassword);
+  }
 
-    if (foundUser) return foundUser;
+  public async register(args: RegisterArgs): Promise<RegisterReturn> {
+    const { input: credentials } = args;
 
-    const result: UserSchemaType = {
-      id: '1',
-      username: credentials.username,
-      password: credentials.password,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
+    try {
+      const activeUser = await this.getActiveUser(credentials.email);
 
-    return result;
+      if (activeUser) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'User already exists.',
+        });
+      }
+
+      const newUser = await userRepository.createUser({
+        ...args.input,
+        password: await this.hasPassword(args.input.password),
+      });
+
+      if (!newUser) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'Failed to create user',
+        });
+      }
+
+      const { password: _, ...other } = newUser;
+
+      return {
+        user: other,
+        message: 'User registered successfully',
+      };
+    } catch (error: unknown) {
+      if (error instanceof TRPCError) throw error;
+      throw new TRPCError({
+        code: 'INTERNAL_SERVER_ERROR',
+        message: 'Failed to register user',
+      });
+    }
   }
 
   public async login(args: LoginArgs): Promise<ServerSession> {
-    const {
-      input: { credentials },
-      headers,
-    } = args;
+    const { input: credentials, headers } = args;
 
     try {
-      const verifiedUser = await this.verifyCredentials(credentials);
+      const activeUser = await this.getActiveUser(credentials.email);
 
-      const { username } = verifiedUser;
-      const password = Buffer.from(credentials.password).toString('base64');
-
-      if (!username || !password) {
+      if (!activeUser) {
         throw new TRPCError({
           code: 'UNAUTHORIZED',
           message: 'Invalid credentials',
         });
       }
-      const userInfo = await userRepository.upsertUser({
-        onCreate: {
-          username,
-          password,
-        },
-        onUpdate: {
-          username,
-          password,
-        },
-      });
 
-      if (userInfo === null) {
+      if (
+        !activeUser.password ||
+        !(await this.verifyPassword(credentials.password, activeUser.password))
+      ) {
         throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to login',
+          code: 'UNAUTHORIZED',
+          message: 'Invalid credentials',
         });
       }
 
       const expiresIn = TimeInSeconds.TwoWeeks;
-      const sessionToken = await this.generateSessionToken(userInfo.id);
+      const sessionToken = await this.generateSessionToken(activeUser.id);
 
       await this.addUserSession({
-        userId: userInfo.id,
+        userId: activeUser.id,
         sessionToken,
         expiresIn,
       });
@@ -227,11 +231,11 @@ class AuthService {
         headers,
         expiresInSeconds: expiresIn,
         name: USER_ID_COOKIE_KEY,
-        value: `${userInfo.id}`,
+        value: activeUser.id,
       });
 
       return {
-        user: userInfo,
+        user: activeUser,
         sessionToken,
       };
     } catch (error: unknown) {
@@ -242,7 +246,6 @@ class AuthService {
         });
       }
       if (error instanceof TRPCError) throw error;
-      // TODO: Logging
       throw new TRPCError({
         code: 'INTERNAL_SERVER_ERROR',
         message: 'Failed to login',
@@ -270,12 +273,20 @@ class AuthService {
   public async validateSessionToken(
     args: ValidateSessionTokenArgs
   ): Promise<ValidateSessionTokenResult> {
+    const userInfo = await userRepository.getUserById(args.userId, {
+      includeSensitiveInfo: true,
+    });
+
+    if (!userInfo) {
+      return {
+        success: false,
+      };
+    }
+
     if (!args.validateSessionToken) {
       return {
         success: true,
-        userInfo: await userRepository.getUserById(args.userId, {
-          includeSensitiveInfo: true,
-        }),
+        userInfo,
         sessionToken: args.encodedSessionToken,
       };
     }
@@ -300,9 +311,7 @@ class AuthService {
 
     return {
       success: true,
-      userInfo: await userRepository.getUserById(args.userId, {
-        includeSensitiveInfo: true,
-      }),
+      userInfo,
       sessionToken: finalSessionToken,
     };
   }

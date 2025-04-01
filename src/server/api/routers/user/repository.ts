@@ -1,18 +1,20 @@
+import type { Prisma, User } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
-import { eq } from 'drizzle-orm';
 
 import { Logger } from '@/server/api/common/logger';
 import { type ServerSession } from '@/server/api/routers/auth/types';
-import { type GetUserByIdOptions, type UpsertUserParams } from '@/server/api/routers/user/types';
+import {
+  type GetUserByIdOptions,
+  type UserWithoutSensitiveInfo,
+} from '@/server/api/routers/user/types';
 
 import { db } from '@/db';
-import { UserSchema, type UserSchemaType } from '@/db/models/schema';
 import { redis } from '@/db/redis';
 
 class UserRepository {
   private readonly logger = new Logger(UserRepository.name);
 
-  private getUserInfoKey(userId: UserSchemaType['id']): string {
+  private getUserInfoKey(userId: User['id']): string {
     return `user-info:${userId}`;
   }
 
@@ -37,9 +39,9 @@ class UserRepository {
   }
 
   public async getUserById<T extends boolean = false>(
-    id: UserSchemaType['id'],
+    id: User['id'],
     options?: GetUserByIdOptions<T>
-  ): Promise<(T extends true ? ServerSession['user'] : UserSchemaType) | null> {
+  ): Promise<User | UserWithoutSensitiveInfo | null> {
     const { includeSensitiveInfo = false, bypassCache = false } = options ?? {};
 
     if (!bypassCache) {
@@ -49,45 +51,36 @@ class UserRepository {
         if (includeSensitiveInfo) return cachedUserInfo;
 
         return {
-          id: cachedUserInfo.id,
-          username: cachedUserInfo.username,
-          password: cachedUserInfo.password,
-          createdAt: cachedUserInfo.createdAt,
-          updatedAt: cachedUserInfo.updatedAt,
-        } satisfies UserSchemaType as T extends true ? ServerSession['user'] : UserSchemaType;
+          ...cachedUserInfo,
+          password: undefined,
+        };
       }
     }
 
-    const selectOptions = {
-      id: UserSchema.id,
-      username: UserSchema.username,
-      createdAt: UserSchema.createdAt,
-      updatedAt: UserSchema.updatedAt,
-    };
+    const result = await db.user.findUnique({
+      where: {
+        id,
+      },
+      omit: {
+        ...(includeSensitiveInfo
+          ? {}
+          : {
+              password: false,
+            }),
+      },
+    });
 
-    const selectSensitiveInfoOptions = {
-      ...selectOptions,
-      password: UserSchema.password,
-    };
-
-    const results = await db
-      .select(includeSensitiveInfo ? selectSensitiveInfoOptions : selectOptions)
-      .from(UserSchema)
-      .where(eq(UserSchema.id, id));
-
-    const userQuery = results[0] as T extends true ? ServerSession['user'] : UserSchemaType;
-
-    if (userQuery !== undefined) {
-      this.cacheUserInfo(userQuery);
+    if (result) {
+      this.cacheUserInfo(result);
     }
 
-    return userQuery;
+    return result;
   }
 
   public async getUserByIdOrThrow<T extends boolean = false>(
-    id: UserSchemaType['id'],
+    id: User['id'],
     options?: GetUserByIdOptions<T>
-  ): Promise<T extends true ? ServerSession['user'] : UserSchemaType> {
+  ): Promise<UserWithoutSensitiveInfo> {
     const user = await this.getUserById(id, options);
 
     if (user === null) {
@@ -100,32 +93,13 @@ class UserRepository {
     return user;
   }
 
-  public async upsertUser(data: UpsertUserParams): Promise<ServerSession['user'] | null> {
+  public async createUser(data: Prisma.UserCreateInput): Promise<User | null> {
     try {
-      const items = await db
-        .insert(UserSchema)
-        .values({
-          id: crypto.randomUUID(),
-          username: data.onCreate.username,
-          password: data.onCreate.password,
-        })
-        .onConflictDoUpdate({
-          target: UserSchema.username,
-          set: {
-            password: data.onUpdate.password,
-          },
-        })
-        .returning({
-          id: UserSchema.id,
-          username: UserSchema.username,
-          password: UserSchema.password,
-          createdAt: UserSchema.createdAt,
-          updatedAt: UserSchema.updatedAt,
-        });
+      const result = await db.user.create({
+        data,
+      });
 
-      const result = items[0];
-
-      this.logger.info('Upserted user', result);
+      this.logger.info('Created user', result);
 
       if (result !== undefined) {
         this.cacheUserInfo(result);
@@ -134,9 +108,9 @@ class UserRepository {
       return result ?? null;
     } catch (error: unknown) {
       if (error instanceof Error) {
-        this.logger.error('Failed to upsert user', error);
+        this.logger.error('Failed to create user', error);
       } else {
-        this.logger.error('Failed to upsert user');
+        this.logger.error('Failed to create user');
       }
 
       return null;

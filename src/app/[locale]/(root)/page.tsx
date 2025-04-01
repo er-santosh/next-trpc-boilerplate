@@ -121,7 +121,7 @@ export default function LandingPage() {
               </CardHeader>
               <CardContent>
                 <CardDescription>
-                  DrizzleORM with support for SQLite, PostgreSQL, MySQL, and Turso for efficient
+                  Prisma ORM with support for SQLite, PostgreSQL, MySQL, and Turso for efficient
                   data management.
                 </CardDescription>
               </CardContent>
@@ -193,7 +193,7 @@ export default function LandingPage() {
                 </li>
                 <li className="flex items-center">
                   <Zap className="mr-2 h-4 w-4 text-primary" />
-                  Database with DrizzleORM and Turso
+                  Database with Prisma ORM and Turso
                 </li>
                 <li className="flex items-center">
                   <Zap className="mr-2 h-4 w-4 text-primary" />
