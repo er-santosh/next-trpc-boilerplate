@@ -9,7 +9,6 @@ export const env = createEnv({
    */
   server: {
     DATABASE_URL: z.string(),
-    DATABASE_AUTH_TOKEN: z.string().optional(),
     REDIS_URL: z.string(),
     NEXTAUTH_SECRET: process.env.NODE_ENV === 'production' ? z.string() : z.string().optional(),
     NEXTAUTH_URL: z.preprocess(
@@ -20,11 +19,6 @@ export const env = createEnv({
       process.env.VERCEL ? z.string() : z.string().url()
     ),
     ANALYZE: z
-      .enum(['true', 'false'])
-      .optional()
-      .transform(value => value === 'true'),
-    LOGTAIL_SOURCE_TOKEN: z.string().optional(),
-    DB_MIGRATIONS_ENABLED: z
       .enum(['true', 'false'])
       .optional()
       .transform(value => value === 'true'),
@@ -39,15 +33,12 @@ export const env = createEnv({
   runtimeEnv: {
     ANALYZE: process.env.ANALYZE,
     DATABASE_URL: process.env.DATABASE_URL,
-    DATABASE_AUTH_TOKEN: process.env.DATABASE_AUTH_TOKEN,
     REDIS_URL: process.env.REDIS_URL,
 
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
 
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
-    LOGTAIL_SOURCE_TOKEN: process.env.LOGTAIL_SOURCE_TOKEN,
-    DB_MIGRATIONS_ENABLED: process.env.DB_MIGRATIONS_ENABLED,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
