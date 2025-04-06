@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 
-import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,7 +26,7 @@ interface SignInFormProps {
   callbackUrl?: string;
 }
 
-export default function SignInForm({ callbackUrl = APP_ROUTES.DASHBOARD }: SignInFormProps) {
+export default function SignInForm(_props: SignInFormProps) {
   const [isLoading, setLoading] = useState(false);
   const form = useForm<LoginInputType>({
     resolver: zodResolver(LoginInputSchema),
@@ -37,22 +36,22 @@ export default function SignInForm({ callbackUrl = APP_ROUTES.DASHBOARD }: SignI
     },
   });
 
-  const onSubmit = async (values: LoginInputType) => {
+  const onSubmit = async (_values: LoginInputType) => {
     try {
       setLoading(true);
-      const result = await signIn('credentials', {
-        ...values,
-        callbackUrl,
-        redirect: false,
-      });
+      // const result = await signIn('credentials', {
+      //   ...values,
+      //   callbackUrl,
+      //   redirect: false,
+      // });
 
-      if (result?.error) {
-        toast.error(result.error);
-      }
+      // if (result?.error) {
+      //   toast.error(result.error);
+      // }
 
-      if (result?.ok) {
-        window.location.href = callbackUrl;
-      }
+      // if (result?.ok) {
+      //   window.location.href = callbackUrl;
+      // }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
 

@@ -8,7 +8,6 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
-import { getToken } from 'next-auth/jwt';
 import type { NextRequest } from 'next/server';
 
 import { initTRPC, TRPCError } from '@trpc/server';
@@ -46,15 +45,14 @@ interface CreateContextOptions {
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (opts: CreateContextOptions) => {
-  const token = await getToken({ req: opts.req });
-
-  return {
-    ...opts,
-    token,
-    db,
-  };
-};
+export const createTRPCContext = async (opts: CreateContextOptions) => ({
+  ...opts,
+  token: {
+    id: '',
+    sessionToken: '',
+  },
+  db,
+});
 export type TRPCContext = Awaited<ReturnType<typeof createTRPCContext>>;
 
 /**
