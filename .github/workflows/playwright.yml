@@ -1,4 +1,14 @@
 name: Playwright Tests
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+  REDIS_URL: ${{ secrets.REDIS_URL }}
+  NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+  NEXT_PUBLIC_APP_URL: ${{secrets.NEXT_PUBLIC_APP_URL}}
+  ANALYZE: false
+  NEXTAUTH_URL: ${{secrets.NEXTAUTH_URL}}
+  NODE_ENV: test
+  TURBO_TELEMETRY_DISABLED: 1
+  NEXT_TELEMETRY_DISABLED: 1
 on:
   push:
     branches: [main, master]
