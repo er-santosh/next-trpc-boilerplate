@@ -92,8 +92,10 @@
     "hocs",
     "luxon",
     "prettiercache",
+    "Shadcn",
     "stylelintcache",
-    "turbopack"
+    "turbopack",
+    "Turso"
   ],
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"

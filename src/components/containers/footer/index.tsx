@@ -1,4 +1,4 @@
-import { Github, Rocket } from 'lucide-react';
+import { FaGithub, FaRocket } from 'react-icons/fa6';
 
 import siteConfig from '@/configs/site-config';
 
@@ -9,7 +9,7 @@ const Footer = () => (
     <div className="container px-4 md:px-6">
       <div className="flex flex-col items-center justify-center space-y-4 text-center">
         <div className="flex items-center space-x-2">
-          <Rocket className="h-6 w-6" />
+          <FaRocket className="h-6 w-6" />
           <span className="font-bold">Next15 Boilerplate</span>
         </div>
         <p className="text-sm text-muted-foreground">
@@ -22,7 +22,7 @@ const Footer = () => (
             rel="noreferrer"
             className="text-muted-foreground hover:text-foreground"
           >
-            <Github className="h-5 w-5" />
+            <FaGithub className="h-5 w-5" />
             <span className="sr-only">GitHub</span>
           </Link>
         </div>

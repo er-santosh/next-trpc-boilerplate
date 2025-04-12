@@ -3,9 +3,9 @@
 import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Mail } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { FaEnvelope } from 'react-icons/fa6';
 
 import EmailField from '@/components/common/form/email-field';
 import InputField from '@/components/common/form/input-field';
@@ -75,7 +75,7 @@ export default function SignUpForm({ callbackUrl = APP_ROUTES.DASHBOARD }: SignU
         </div>
 
         <Button type="submit" className="w-full">
-          <Mail className="mr-2 h-4 w-4" />
+          <FaEnvelope className="mr-2 h-4 w-4" />
           Create an account
         </Button>
       </form>

@@ -4,7 +4,7 @@ import { type FC } from 'react';
 
 import { useTranslations } from 'next-intl';
 
-import { ArrowRightIcon } from 'lucide-react';
+import { FaArrowRight } from 'react-icons/fa6';
 
 import ErrorLayout from '@/layouts/error-layout';
 
@@ -35,7 +35,7 @@ const GlobalErrorPage: FC<GlobalErrorPageProps> = ({ params }) => {
               <Button asChild>
                 <Link href={'/'}>
                   {t('Layouts.error.backToHome')}
-                  <ArrowRightIcon />
+                  <FaArrowRight />
                 </Link>
               </Button>
             </main>

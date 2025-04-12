@@ -5,9 +5,9 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Mail } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import { FaEnvelope } from 'react-icons/fa6';
 
 import EmailField from '@/components/common/form/email-field';
 import PasswordField from '@/components/common/form/password-field';
@@ -96,7 +96,7 @@ export default function SignInForm(_props: SignInFormProps) {
             'cursor-not-allowed': isLoading,
           })}
         >
-          <Mail className="mr-2 h-4 w-4" />
+          <FaEnvelope className="mr-2 h-4 w-4" />
           Sign In with Email
         </Button>
       </form>

@@ -1,4 +1,4 @@
-import { Rocket } from 'lucide-react';
+import { FaRocket } from 'react-icons/fa6';
 
 import LocaleSwitcher from '@/components/common/locale-switcher';
 import ThemeToggler from '@/components/common/theme-toggler';
@@ -13,7 +13,7 @@ const DashboardNavbar = () => (
     <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
       <div className="flex gap-6 md:gap-10">
         <Link href="/" className="flex items-center space-x-2">
-          <Rocket className="h-6 w-6" />
+          <FaRocket className="h-6 w-6" />
           <span className="font-bold hidden sm:inline-block">{siteConfig.title}</span>
         </Link>
       </div>

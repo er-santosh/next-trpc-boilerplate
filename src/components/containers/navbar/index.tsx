@@ -1,4 +1,4 @@
-import { Github, Rocket } from 'lucide-react';
+import { FaGithub, FaRocket } from 'react-icons/fa6';
 
 import LocaleSwitcher from '@/components/common/locale-switcher';
 import ThemeToggler from '@/components/common/theme-toggler';
@@ -15,7 +15,7 @@ const Navbar = () => (
     <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
       <div className="flex gap-6 md:gap-10">
         <Link href="/" className="flex items-center space-x-2">
-          <Rocket className="h-6 w-6" />
+          <FaRocket className="h-6 w-6" />
           <span className="font-bold hidden sm:inline-block">{siteConfig.title}</span>
         </Link>
       </div>
@@ -23,7 +23,7 @@ const Navbar = () => (
         <nav className="flex items-center space-x-4">
           <Button variant="ghost" asChild>
             <Link href={siteConfig.github.repoLink} target="_blank" rel="noreferrer">
-              <Github className="h-5 w-5" />
+              <FaGithub className="h-5 w-5" />
               <span className="sr-only">GitHub</span>
             </Link>
           </Button>

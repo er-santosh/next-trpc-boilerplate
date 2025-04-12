@@ -1,6 +1,15 @@
 import { getTranslations } from 'next-intl/server';
 
-import { Code, Database, ExternalLink, Github, Globe, Rocket, Shield, Zap } from 'lucide-react';
+import {
+  FaArrowUpRightFromSquare,
+  FaBolt,
+  FaCode,
+  FaDatabase,
+  FaGithub,
+  FaGlobe,
+  FaRocket,
+  FaShield,
+} from 'react-icons/fa6';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -31,8 +40,8 @@ export default function LandingPage() {
                 Next15 with Next-Auth and TRPC Boilerplate
               </h1>
               <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
-                A developer-friendly starter code for Next.js projects, built with Tailwind CSS,
-                TypeScript, and more.
+                A developer-friendly starter code for Next.js projects, built with Shadcn UI,
+                Tailwind CSS, TypeScript, and more.
               </p>
             </div>
             <div className="gap-4 flex flex-col sm:flex-row">
@@ -42,7 +51,7 @@ export default function LandingPage() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Github className="mr-2 h-4 w-4" />
+                  <FaGithub className="mr-2 h-4 w-4" />
                   View on GitHub
                 </Link>
               </Button>
@@ -80,7 +89,7 @@ export default function LandingPage() {
           <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mt-12">
             <Card>
               <CardHeader className="pb-2">
-                <Rocket className="h-6 w-6 text-primary mb-2" />
+                <FaRocket className="h-6 w-6 text-primary mb-2" />
                 <CardTitle>Next.js 15</CardTitle>
               </CardHeader>
               <CardContent>
@@ -92,7 +101,7 @@ export default function LandingPage() {
             </Card>
             <Card>
               <CardHeader className="pb-2">
-                <Zap className="h-6 w-6 text-primary mb-2" />
+                <FaBolt className="h-6 w-6 text-primary mb-2" />
                 <CardTitle>TypeScript & ESLint</CardTitle>
               </CardHeader>
               <CardContent>
@@ -104,31 +113,27 @@ export default function LandingPage() {
             </Card>
             <Card>
               <CardHeader className="pb-2">
-                <Shield className="h-6 w-6 text-primary mb-2" />
+                <FaShield className="h-6 w-6 text-primary mb-2" />
                 <CardTitle>Authentication</CardTitle>
               </CardHeader>
               <CardContent>
                 <CardDescription>
-                  Secure authentication with Next-Auth, supporting multiple providers and
-                  strategies.
+                  Secure authentication with Clerk, supporting multiple providers and strategies.
                 </CardDescription>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="pb-2">
-                <Database className="h-6 w-6 text-primary mb-2" />
+                <FaDatabase className="h-6 w-6 text-primary mb-2" />
                 <CardTitle>Database Integration</CardTitle>
               </CardHeader>
               <CardContent>
-                <CardDescription>
-                  Prisma ORM with support for SQLite, PostgreSQL, MySQL, and Turso for efficient
-                  data management.
-                </CardDescription>
+                <CardDescription>Prisma ORM with support for PostgreSQL.</CardDescription>
               </CardContent>
             </Card>
             <Card>
               <CardHeader className="pb-2">
-                <Code className="h-6 w-6 text-primary mb-2" />
+                <FaCode className="h-6 w-6 text-primary mb-2" />
                 <CardTitle>tRPC</CardTitle>
               </CardHeader>
               <CardContent>
@@ -139,7 +144,7 @@ export default function LandingPage() {
             </Card>
             <Card>
               <CardHeader className="pb-2">
-                <Globe className="h-6 w-6 text-primary mb-2" />
+                <FaGlobe className="h-6 w-6 text-primary mb-2" />
                 <CardTitle>Internationalization</CardTitle>
               </CardHeader>
               <CardContent>
@@ -176,27 +181,27 @@ export default function LandingPage() {
               </p>
               <ul className="space-y-2 text-muted-foreground">
                 <li className="flex items-center">
-                  <Zap className="mr-2 h-4 w-4 text-primary" />
+                  <FaBolt className="mr-2 h-4 w-4 text-primary" />
                   Next.js, TypeScript, ESLint, Prettier
                 </li>
                 <li className="flex items-center">
-                  <Zap className="mr-2 h-4 w-4 text-primary" />
+                  <FaBolt className="mr-2 h-4 w-4 text-primary" />
                   Husky, Lint-Staged, Jest, Testing Library
                 </li>
                 <li className="flex items-center">
-                  <Zap className="mr-2 h-4 w-4 text-primary" />
+                  <FaBolt className="mr-2 h-4 w-4 text-primary" />
                   Commitlint, VSCode, PostCSS, Tailwind CSS
                 </li>
                 <li className="flex items-center">
-                  <Zap className="mr-2 h-4 w-4 text-primary" />
-                  Authentication with Next-Auth
+                  <FaBolt className="mr-2 h-4 w-4 text-primary" />
+                  Authentication with Clerk
                 </li>
                 <li className="flex items-center">
-                  <Zap className="mr-2 h-4 w-4 text-primary" />
-                  Database with Prisma ORM and Turso
+                  <FaBolt className="mr-2 h-4 w-4 text-primary" />
+                  Database with Prisma ORM
                 </li>
                 <li className="flex items-center">
-                  <Zap className="mr-2 h-4 w-4 text-primary" />
+                  <FaBolt className="mr-2 h-4 w-4 text-primary" />
                   End-to-end typesafe APIs with tRPC
                 </li>
               </ul>
@@ -206,50 +211,17 @@ export default function LandingPage() {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <Card>
                   <CardHeader className="pb-2">
-                    <CardTitle className="text-base">Error Monitoring</CardTitle>
+                    <CardTitle className="text-base">Internationalization</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <Link
                       className="flex items-center text-sm text-primary hover:underline"
-                      href="https://sentry.io/for/nextjs/"
+                      href="https://next-intl.dev/"
                       target="_blank"
                       rel="noreferrer"
                     >
-                      Sentry
-                      <ExternalLink className="ml-1 h-3 w-3" />
-                    </Link>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base">Logging</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-sm text-muted-foreground">Pino.js and Log Management with</p>
-                    <Link
-                      className="flex items-center text-sm text-primary hover:underline"
-                      href="https://betterstack.com/"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Better Stack
-                      <ExternalLink className="ml-1 h-3 w-3" />
-                    </Link>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="pb-2">
-                    <CardTitle className="text-base">Database</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <Link
-                      className="flex items-center text-sm text-primary hover:underline"
-                      href="https://turso.tech"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      Turso
-                      <ExternalLink className="ml-1 h-3 w-3" />
+                      Next Intl
+                      <FaArrowUpRightFromSquare className="ml-1 h-3 w-3" />
                     </Link>
                   </CardContent>
                 </Card>
@@ -265,7 +237,7 @@ export default function LandingPage() {
                       rel="noreferrer"
                     >
                       tRPC
-                      <ExternalLink className="ml-1 h-3 w-3" />
+                      <FaArrowUpRightFromSquare className="ml-1 h-3 w-3" />
                     </Link>
                   </CardContent>
                 </Card>
@@ -294,14 +266,14 @@ export default function LandingPage() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Github className="mr-2 h-4 w-4" />
+                  <FaGithub className="mr-2 h-4 w-4" />
                   Star on GitHub
                 </Link>
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="bg-transparent text-primary-foreground border-primary-foreground/20 hover:bg-primary-foreground/10"
+                className="bg-transparent text-primary-foreground border-primary-foreground/20 hover:bg-secondary-foreground/10 hover:text-secondary"
                 asChild
               >
                 <Link

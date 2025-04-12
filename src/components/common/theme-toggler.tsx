@@ -3,7 +3,7 @@
 import { useTranslations } from 'next-intl';
 import { useTheme } from 'next-themes';
 
-import { MoonIcon, SunIcon } from 'lucide-react';
+import { FaMoon, FaSun } from 'react-icons/fa6';
 
 import { Button } from '@/components/ui/button';
 
@@ -16,8 +16,8 @@ const ThemeToggler = () => {
 
   return (
     <Button type="button" onClick={toggleCurrentTheme} aria-label={ariaLabel}>
-      <MoonIcon className="block dark:hidden" height="20" />
-      <SunIcon className="hidden dark:block" height="20" />
+      <FaMoon className="block dark:hidden" height="20" />
+      <FaSun className="hidden dark:block" height="20" />
     </Button>
   );
 };
