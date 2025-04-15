@@ -40,7 +40,7 @@ export default async function RootAppLayout({
     <html lang={hrefLang} dir={langDir} suppressHydrationWarning>
       <body className={fontClasses}>
         <AppProvider>
-          <NextTopLoader color="var(--primary)" />
+          <NextTopLoader color="var(--primary)" showSpinner={false} />
           {children}
         </AppProvider>
       </body>

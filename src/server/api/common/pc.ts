@@ -59,19 +59,9 @@ export const createColors = (enabled: boolean = isColorSupported) => ({
   bgOrange: enabled ? formatter('\u001b[48;5;208m', '\x1b[49m') : String,
 });
 
-const tty = await import('tty');
-const isTTY = tty.isatty(1);
-
-const argv: string[] = process.argv ?? [];
 const { env } = process;
 
-isColorSupported =
-  !('NO_COLOR' in env || argv.includes('--no-color')) &&
-  ('FORCE_COLOR' in env ||
-    argv.includes('--color') ||
-    process.platform === 'win32' ||
-    (isTTY && env.TERM !== 'dumb') ||
-    'CI' in env);
+isColorSupported = process.platform === 'win32' || 'CI' in env;
 
 const colors: ReturnType<typeof createColors> = createColors(isColorSupported);
 

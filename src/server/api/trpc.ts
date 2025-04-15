@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable no-unused-vars */
+
 /**
  * YOU PROBABLY DON'T NEED TO EDIT THIS FILE, UNLESS:
  * 1. You want to modify request context (see Part 1).
@@ -14,13 +14,7 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 import { ZodError } from 'zod';
 
-import {
-  type RateLimitConfig,
-  rateLimitMiddleware,
-} from '@/server/api/common/middlewares/rate-limit-middleware';
-import { getUserIdFromAuthToken } from '@/server/api/common/utils/helper';
-import { authService } from '@/server/api/routers/auth/service';
-import { type ServerSession } from '@/server/api/routers/auth/types';
+import { auth } from '@/server/auth';
 
 import { db } from '@/db';
 
@@ -47,10 +41,7 @@ interface CreateContextOptions {
  */
 export const createTRPCContext = async (opts: CreateContextOptions) => ({
   ...opts,
-  token: {
-    id: '',
-    sessionToken: '',
-  },
+  session: await auth(),
   db,
 });
 export type TRPCContext = Awaited<ReturnType<typeof createTRPCContext>>;
@@ -100,15 +91,11 @@ export const createCallerFactory = t.createCallerFactory;
  */
 export const publicProcedure = t.procedure;
 
-type ProtectedProcedureOpts = Omit<TRPCContext, 'session'> & {
-  session: ServerSession;
-};
+type ProtectedProcedureOpts = TRPCContext;
 const enforceUserIsAuthenticated = t.middleware(async opts => {
-  const { userId, encodedSessionToken, validateSessionToken } = await getUserIdFromAuthToken(
-    opts.ctx
-  );
+  const session = opts.ctx.session;
 
-  if (!encodedSessionToken || !userId) {
+  if (!session || !session.user.id) {
     throw new TRPCError({
       code: 'UNAUTHORIZED',
       message: 'You must be logged in to perform this action',
@@ -116,24 +103,16 @@ const enforceUserIsAuthenticated = t.middleware(async opts => {
   }
 
   try {
-    const result = await authService.validateSessionToken({
-      encodedSessionToken,
-      userId,
-      headers: opts.ctx.headers,
-      validateSessionToken,
+    const user = await opts.ctx.db.user.findUnique({
+      where: {
+        id: session.user.id,
+      },
     });
 
-    if (!result.success) {
+    if (!user) {
       throw new TRPCError({
         code: 'UNAUTHORIZED',
         message: 'You must be logged in to perform this action',
-      });
-    }
-
-    if (!result.userInfo) {
-      throw new TRPCError({
-        code: 'INTERNAL_SERVER_ERROR',
-        message: 'Failed to retrieve user info',
       });
     }
 
@@ -141,8 +120,11 @@ const enforceUserIsAuthenticated = t.middleware(async opts => {
       ctx: {
         ...opts.ctx,
         session: {
-          user: result.userInfo,
-          sessionToken: result.sessionToken,
+          ...session,
+          user: {
+            ...session.user,
+            ...user,
+          },
         },
       } satisfies ProtectedProcedureOpts,
     });
@@ -152,34 +134,9 @@ const enforceUserIsAuthenticated = t.middleware(async opts => {
     }
     throw new TRPCError({
       code: 'INTERNAL_SERVER_ERROR',
-      message: 'Failed to verify session token',
+      message: 'Failed to fetch user details',
     });
   }
 });
 
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthenticated);
-export const protectedRateLimitedProcedure = (
-  configOrFn:
-    | RateLimitConfig
-    | ((opts: ProtectedProcedureOpts) => RateLimitConfig)
-    | ((opts: ProtectedProcedureOpts) => Promise<RateLimitConfig>)
-) =>
-  protectedProcedure.use(async opts => {
-    let config: RateLimitConfig;
-
-    if (typeof configOrFn === 'function') {
-      const result = configOrFn({ ...opts.ctx, session: opts.ctx.session });
-
-      if (result instanceof Promise) {
-        config = await result;
-      } else {
-        config = result;
-      }
-    } else {
-      config = configOrFn;
-    }
-
-    await rateLimitMiddleware(opts.ctx.session, config);
-
-    return opts.next(opts);
-  });

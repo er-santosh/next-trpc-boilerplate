@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -16,7 +17,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Form } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 
-import { APP_ROUTES } from '@/constants/app-routes';
+import { APP_ROUTES, DEFAULT_LOGIN_REDIRECT_ROUTE } from '@/constants/app-routes';
 
 import { cn } from '@/lib/utils';
 
@@ -26,7 +27,9 @@ interface SignInFormProps {
   callbackUrl?: string;
 }
 
-export default function SignInForm(_props: SignInFormProps) {
+export default function SignInForm({
+  callbackUrl = DEFAULT_LOGIN_REDIRECT_ROUTE,
+}: SignInFormProps) {
   const [isLoading, setLoading] = useState(false);
   const form = useForm<LoginInputType>({
     resolver: zodResolver(LoginInputSchema),
@@ -36,22 +39,24 @@ export default function SignInForm(_props: SignInFormProps) {
     },
   });
 
-  const onSubmit = async (_values: LoginInputType) => {
+  const onSubmit = async (values: LoginInputType) => {
     try {
       setLoading(true);
-      // const result = await signIn('credentials', {
-      //   ...values,
-      //   callbackUrl,
-      //   redirect: false,
-      // });
+      const result = await signIn('credentials', {
+        ...values,
+        callbackUrl,
+        redirect: false,
+      });
 
-      // if (result?.error) {
-      //   toast.error(result.error);
-      // }
+      if (result?.error) {
+        toast.error(result.error);
+      }
 
-      // if (result?.ok) {
-      //   window.location.href = callbackUrl;
-      // }
+      if (result?.ok && result?.url) {
+        toast.success('Login successful');
+        // Redirect to the callback URL
+        window.location.href = callbackUrl;
+      }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
 

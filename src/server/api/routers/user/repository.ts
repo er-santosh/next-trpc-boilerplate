@@ -2,60 +2,21 @@ import type { Prisma, User } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 
 import { Logger } from '@/server/api/common/logger';
-import { type ServerSession } from '@/server/api/routers/auth/types';
 import {
   type GetUserByIdOptions,
   type UserWithoutSensitiveInfo,
 } from '@/server/api/routers/user/types';
 
 import { db } from '@/db';
-import { redis } from '@/db/redis';
 
 class UserRepository {
   private readonly logger = new Logger(UserRepository.name);
-
-  private getUserInfoKey(userId: User['id']): string {
-    return `user-info:${userId}`;
-  }
-
-  private async cacheUserInfo(user: ServerSession['user']): Promise<void> {
-    const userKey = this.getUserInfoKey(user.id);
-
-    await redis.set(
-      userKey,
-      JSON.stringify(user),
-      'EX',
-      60 * 60 * 24 * 7 // 7 days in seconds
-    );
-  }
-
-  private async getCachedUserInfo(
-    userId: ServerSession['user']['id']
-  ): Promise<ServerSession['user'] | null> {
-    const userKey = this.getUserInfoKey(userId);
-    const cachedUserInfo = await redis.get(userKey);
-
-    return cachedUserInfo !== null ? (JSON.parse(cachedUserInfo) as ServerSession['user']) : null;
-  }
 
   public async getUserById<T extends boolean = false>(
     id: User['id'],
     options?: GetUserByIdOptions<T>
   ): Promise<User | UserWithoutSensitiveInfo | null> {
-    const { includeSensitiveInfo = false, bypassCache = false } = options ?? {};
-
-    if (!bypassCache) {
-      const cachedUserInfo = await this.getCachedUserInfo(id);
-
-      if (cachedUserInfo !== null) {
-        if (includeSensitiveInfo) return cachedUserInfo;
-
-        return {
-          ...cachedUserInfo,
-          password: undefined,
-        };
-      }
-    }
+    const { includeSensitiveInfo = false } = options ?? {};
 
     const result = await db.user.findUnique({
       where: {
@@ -69,10 +30,6 @@ class UserRepository {
             }),
       },
     });
-
-    if (result) {
-      this.cacheUserInfo(result);
-    }
 
     return result;
   }
@@ -100,10 +57,6 @@ class UserRepository {
       });
 
       this.logger.info('Created user', result);
-
-      if (result !== undefined) {
-        this.cacheUserInfo(result);
-      }
 
       return result ?? null;
     } catch (error: unknown) {

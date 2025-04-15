@@ -118,7 +118,8 @@ export default function LandingPage() {
               </CardHeader>
               <CardContent>
                 <CardDescription>
-                  Secure authentication with Clerk, supporting multiple providers and strategies.
+                  Secure authentication with next-auth, supporting multiple providers and
+                  strategies.
                 </CardDescription>
               </CardContent>
             </Card>
@@ -194,7 +195,7 @@ export default function LandingPage() {
                 </li>
                 <li className="flex items-center">
                   <FaBolt className="mr-2 h-4 w-4 text-primary" />
-                  Authentication with Clerk
+                  Authentication with next-auth
                 </li>
                 <li className="flex items-center">
                   <FaBolt className="mr-2 h-4 w-4 text-primary" />

@@ -15,7 +15,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Form } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 
-import { APP_ROUTES } from '@/constants/app-routes';
+import { APP_ROUTES, DEFAULT_LOGIN_REDIRECT_ROUTE } from '@/constants/app-routes';
 
 import { useRouter } from '@/i18n/navigation';
 
@@ -27,7 +27,9 @@ interface SignUpFormProps {
   callbackUrl?: string;
 }
 
-export default function SignUpForm({ callbackUrl = APP_ROUTES.DASHBOARD }: SignUpFormProps) {
+export default function SignUpForm({
+  callbackUrl = DEFAULT_LOGIN_REDIRECT_ROUTE,
+}: SignUpFormProps) {
   const router = useRouter();
   const form = useForm<RegisterInputType>({
     resolver: zodResolver(RegisterInputSchema),
@@ -62,7 +64,7 @@ export default function SignUpForm({ callbackUrl = APP_ROUTES.DASHBOARD }: SignU
         </div>
         <EmailField label="Email" name="email" control={form.control} />
 
-        <PasswordField name="password" control={form.control} />
+        <PasswordField label="Password" name="password" control={form.control} />
 
         <div className="flex items-center space-x-2">
           <Checkbox id="terms_and_conditions" />
