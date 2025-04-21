@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 
 import Loader from '@/components/ui/loader';
 
-import { APP_ROUTES, DEFAULT_LOGIN_REDIRECT_ROUTE, PUBLIC_ROUTES } from '@/constants/app-routes';
+import { APP_ROUTES, AUTH_ROUTES, DEFAULT_LOGIN_REDIRECT_ROUTE } from '@/constants/app-routes';
 
 import { usePathname, useRouter } from '@/i18n/navigation';
 
@@ -17,19 +17,19 @@ export const AuthGuard: React.FC<PropsWithChildren> = ({ children }) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const isPublicRoute = useCallback(() => PUBLIC_ROUTES.includes(pathname), [pathname]);
+  const isAuthRoute = useCallback(() => AUTH_ROUTES.includes(pathname), [pathname]);
 
   useEffect(() => {
-    if (isPublicRoute() && session.status === 'authenticated') {
+    if (session.status === 'authenticated' && isAuthRoute()) {
       router.push(DEFAULT_LOGIN_REDIRECT_ROUTE);
     }
 
-    if (session.status === 'unauthenticated' && !isPublicRoute()) {
+    if (session.status === 'unauthenticated') {
       router.push(`${APP_ROUTES.AUTH.SIGN_IN}?${searchParams.toString()}`);
     }
-  }, [session.status, pathname, router, searchParams, isPublicRoute]);
+  }, [session.status, pathname, router, searchParams, isAuthRoute]);
 
-  if (session.status === 'loading' || (session.status === 'unauthenticated' && !isPublicRoute())) {
+  if (session.status === 'loading' || (session.status === 'unauthenticated' && !isAuthRoute())) {
     return (
       <div className="flex h-screen items-center justify-center">
         <Loader />

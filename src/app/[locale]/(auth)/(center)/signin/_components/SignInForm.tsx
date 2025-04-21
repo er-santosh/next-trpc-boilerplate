@@ -57,8 +57,6 @@ export default function SignInForm({
 
       if (result?.ok && result?.url) {
         toast.success('Login successful');
-        // Redirect to the callback URL
-        window.location.href = callbackUrl;
       }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
