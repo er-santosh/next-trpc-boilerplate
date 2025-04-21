@@ -1,4 +1,4 @@
-import type { NextAuthConfig } from 'next-auth';
+import { CredentialsSignin, type NextAuthConfig } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
@@ -67,25 +67,25 @@ const providers: NextAuthConfig['providers'] = [
     },
     async authorize(credentials) {
       if (!credentials) {
-        throw new Error('No credentials provided');
+        throw new CredentialsSignin('No credentials provided');
       }
 
       const parsed = await LoginInputSchema.parseAsync(credentials);
 
       const { email, password } = parsed;
 
-      const result = await authService.login({
-        input: {
-          email,
-          password,
-        },
-      });
+      try {
+        const result = await authService.login({
+          input: {
+            email,
+            password,
+          },
+        });
 
-      if (!result) {
-        throw new Error('Invalid credentials');
+        return result.user;
+      } catch {
+        return null;
       }
-
-      return result.user;
     },
   }),
 ];

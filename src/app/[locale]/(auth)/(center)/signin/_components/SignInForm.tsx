@@ -49,7 +49,10 @@ export default function SignInForm({
       });
 
       if (result?.error) {
-        toast.error(result.error);
+        const errorMessage =
+          result.error === 'CredentialsSignin' ? 'Invalid credentials' : result.error;
+
+        toast.error(errorMessage);
       }
 
       if (result?.ok && result?.url) {
