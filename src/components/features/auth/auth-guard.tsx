@@ -24,7 +24,7 @@ export const AuthGuard: React.FC<PropsWithChildren> = ({ children }) => {
       router.push(DEFAULT_LOGIN_REDIRECT_ROUTE);
     }
 
-    if (session.status === 'unauthenticated') {
+    if (session.status === 'unauthenticated' && !isAuthRoute()) {
       router.push(`${APP_ROUTES.AUTH.SIGN_IN}?${searchParams.toString()}`);
     }
   }, [session.status, pathname, router, searchParams, isAuthRoute]);

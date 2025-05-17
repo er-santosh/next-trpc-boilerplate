@@ -1,6 +1,5 @@
 import { CredentialsSignin, type NextAuthConfig } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
 
 import { LoginInputSchema } from '@/schemas/auth';
@@ -29,26 +28,6 @@ const providers: NextAuthConfig['providers'] = [
         email: profile.email,
         avatar_url: profile.picture || profile.avatar_url,
         emailVerified: profile.email_verified,
-      };
-    },
-  }),
-  GitHubProvider({
-    clientId: env.GITHUB_CLIENT_ID,
-    clientSecret: env.GITHUB_CLIENT_SECRET,
-    authorization: {
-      params: {
-        prompt: 'consent',
-        access_type: 'offline',
-        response_type: 'code',
-        scope: 'read:user user:email',
-      },
-    },
-    profile(profile) {
-      return {
-        first_name: profile.name || profile.login,
-        last_name: profile.name || profile.login,
-        email: profile.email,
-        avatar_url: profile.avatar_url,
       };
     },
   }),
