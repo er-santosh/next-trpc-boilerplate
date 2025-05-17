@@ -41,7 +41,7 @@ export default function SignUpForm({
     },
   });
 
-  const { mutate } = api.auth.signUp.useMutation({
+  const { mutate, isPending: isCreatingAccount } = api.auth.signUp.useMutation({
     onSuccess() {
       router.push(`${APP_ROUTES.AUTH.SIGN_IN}?callbackUrl=${callbackUrl}`);
     },
@@ -76,7 +76,7 @@ export default function SignUpForm({
           </Label>
         </div>
 
-        <Button type="submit" className="w-full">
+        <Button isLoading={isCreatingAccount} type="submit" className="w-full">
           <FaEnvelope className="mr-2 h-4 w-4" />
           Create an account
         </Button>

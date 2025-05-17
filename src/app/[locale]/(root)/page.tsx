@@ -1,9 +1,9 @@
 import { getTranslations } from 'next-intl/server';
 
-import CTASection from '@/app/[locale]/(root)/_components/CTASection';
-import DetailedDescriptionSection from '@/app/[locale]/(root)/_components/DetailedDescriptionSection';
-import FeaturesSection from '@/app/[locale]/(root)/_components/FeaturesSection';
-import HeroSection from '@/app/[locale]/(root)/_components/HeroSection';
+import CTASection from '@/components/features/home/cta-section';
+import DetailedDescriptionSection from '@/components/features/home/detailed-description-section';
+import FeaturesSection from '@/components/features/home/features-section';
+import HeroSection from '@/components/features/home/hero-section';
 
 export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
   const t = await getTranslations({

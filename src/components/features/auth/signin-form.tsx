@@ -95,13 +95,7 @@ export default function SignInForm({
             Remember me
           </Label>
         </div>
-        <Button
-          type="submit"
-          disabled={isLoading}
-          className={cn('w-full', {
-            'cursor-not-allowed': isLoading,
-          })}
-        >
+        <Button type="submit" isLoading={isLoading} className={cn('w-full')}>
           <FaEnvelope className="mr-2 h-4 w-4" />
           Sign In with Email
         </Button>

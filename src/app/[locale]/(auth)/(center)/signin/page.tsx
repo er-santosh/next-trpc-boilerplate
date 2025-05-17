@@ -2,7 +2,7 @@ import { getTranslations } from 'next-intl/server';
 
 import AuthCenterLayout from '@/layouts/auth-center-layout';
 
-import SignInForm from './_components/SignInForm';
+import SignInForm from '@/components/features/auth/signin-form';
 
 export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
   const t = await getTranslations({

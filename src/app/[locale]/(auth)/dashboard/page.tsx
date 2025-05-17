@@ -1,6 +1,6 @@
 import { getTranslations } from 'next-intl/server';
 
-import { Hello } from './_components/hello';
+import { Hello } from '@/components/features/dashboard/hello';
 
 export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
   const t = await getTranslations({
