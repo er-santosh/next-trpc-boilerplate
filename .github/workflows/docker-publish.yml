@@ -9,12 +9,6 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  DATABASE_URL: ${{ secrets.DATABASE_URL }}
-  AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-  AUTH_URL: ${{ secrets.AUTH_URL }}
-  GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-  GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-  NEXT_PUBLIC_APP_URL: ${{ secrets.NEXT_PUBLIC_APP_URL }}
 
 jobs:
   build-and-push:

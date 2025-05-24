@@ -23,6 +23,8 @@ COPY --from=deps /app/node_modules ./node_modules/
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=${NEXT_TELEMETRY_DISABLED}
+ARG SKIP_ENV_VALIDATION=1
+ENV SKIP_ENV_VALIDATION=$SKIP_ENV_VALIDATION
 
 RUN pnpm run prisma:generate
 RUN pnpm run build --no-lint
