@@ -3,13 +3,13 @@ import { availableLocaleCodes, defaultLocale, localePrefix } from '@/i18n/locale
 import type { SiteConfig } from '@/types/config';
 
 const siteConfig: SiteConfig = {
-  title: 'Next15 boilerplate with Next Auth and Next Intl',
+  title: 'Next15 boilerplate with Next Intl',
   description:
-    'Next15 is a Starter Next.js boilerplate with NextAuth, i18n, TRPC, Tailwind CSS, and Internationalization support.',
+    'Next15 is a Starter Next.js boilerplate i18n, Tailwind CSS, and Internationalization support.',
   featuredImage: '/static/images/next.svg',
   favicon: '/static/favicons/favicon.ico',
   github: {
-    repoLink: 'https://github.com/er-santosh/next-trpc-boilerplate',
+    repoLink: 'https://github.com/er-santosh/nextjs-boilerplate',
   },
   locale: {
     locales: availableLocaleCodes,

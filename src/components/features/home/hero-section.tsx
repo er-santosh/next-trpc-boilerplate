@@ -10,7 +10,7 @@ const HeroSection = () => (
       <div className="flex flex-col items-center space-y-4 text-center">
         <div className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-            Next15 with Next-Auth and TRPC Boilerplate
+            Next15 Boilerplate
           </h1>
           <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
             A developer-friendly starter code for Next.js projects, built with Shadcn UI, Tailwind
@@ -20,7 +20,7 @@ const HeroSection = () => (
         <div className="gap-4 flex flex-col sm:flex-row">
           <Button size="lg" asChild>
             <Link
-              href="https://github.com/er-santosh/next-trpc-boilerplate"
+              href="https://github.com/er-santosh/nextjs-boilerplate"
               target="_blank"
               rel="noreferrer"
             >
@@ -30,7 +30,7 @@ const HeroSection = () => (
           </Button>
           <Button variant="outline" size="lg" asChild>
             <Link
-              href="https://github.com/er-santosh/next-trpc-boilerplate"
+              href="https://github.com/er-santosh/nextjs-boilerplate"
               target="_blank"
               rel="noreferrer"
             >

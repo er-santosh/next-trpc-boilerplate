@@ -7,7 +7,7 @@ import SignUpForm from '@/components/features/auth/signup-form';
 export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
   const t = await getTranslations({
     locale: (await props.params).locale,
-    namespace: 'Pages.sign_in',
+    namespace: 'Pages.sign_up',
   });
 
   return {

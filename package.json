@@ -1,5 +1,5 @@
 {
-  "name": "next-trpc-boilerplate",
+  "name": "nextjs-boilerplate",
   "version": "1.0.0",
   "private": true,
   "author": "Santosh Tharu (https://github.com/er-santosh)",
@@ -141,9 +141,9 @@
   "packageManager": "pnpm@9.1.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/er-santosh/next-trpc-boilerplate"
+    "url": "https://github.com/er-santosh/nextjs-boilerplate"
   },
-  "homepage": "https://github.com/er-santosh/next-trpc-boilerplate",
+  "homepage": "https://github.com/er-santosh/nextjs-boilerplate",
   "keywords": [
     "next",
     "nextjs",
