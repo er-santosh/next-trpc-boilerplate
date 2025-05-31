@@ -14,11 +14,6 @@
         "description": "This page has thrown a non-recoverable error."
       },
       "backToHome": "Back to Home"
-    },
-    "dashboard": {
-      "dashboard_link": "Dashboard",
-      "user_profile_link": "Manage your account",
-      "sign_out": "Sign out"
     }
   },
   "Components": {
@@ -28,10 +23,5 @@
       }
     }
   },
-  "Pages": {
-    "dashboard": {
-      "meta_title": "Dashboard",
-      "hello_message": "Hello '<strong'>{email}'</strong'>!"
-    }
-  }
+  "Pages": {}
 }
