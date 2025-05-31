@@ -1,6 +1,6 @@
 'use client';
 
-import { FaGoogle } from 'react-icons/fa6';
+import { FaGithub, FaGoogle } from 'react-icons/fa6';
 
 import { Button } from '@/components/ui/button';
 
@@ -11,7 +11,7 @@ interface SocialLoginsProps {
 }
 
 const SocialLogins = ({ callbackUrl }: SocialLoginsProps) => {
-  const handleSocialLogin = async (provider: 'google') => {
+  const handleSocialLogin = async (provider: 'google' | 'github') => {
     await authClient.signIn.social({
       provider,
       callbackURL: callbackUrl,
@@ -23,6 +23,10 @@ const SocialLogins = ({ callbackUrl }: SocialLoginsProps) => {
       <Button onClick={() => handleSocialLogin('google')} variant="outline" className="w-full">
         <FaGoogle className="mr-2 h-5 w-5" />
         Sign in with Google
+      </Button>
+      <Button onClick={() => handleSocialLogin('github')} variant="outline" className="w-full">
+        <FaGithub className="mr-2 h-5 w-5" />
+        Sign in with Github
       </Button>
     </div>
   );
