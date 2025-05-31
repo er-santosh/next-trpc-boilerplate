@@ -4,6 +4,8 @@ import HeroSection from '@/components/features/home/hero-section';
 
 import { ExternalApi } from '@/services/apis/external-api';
 
+import { api } from '@/trpc/server';
+
 export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
   const t = await getTranslations({
     locale: (await props.params).locale,
@@ -18,6 +20,13 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
 
 export default async function LandingPage() {
   const data = await ExternalApi.getExternalData();
+
+  const users = await api.users.getUsers();
+
+  // eslint-disable-next-line no-console
+  console.log({
+    users,
+  });
 
   // eslint-disable-next-line no-console
   console.log('External API Data:', data);

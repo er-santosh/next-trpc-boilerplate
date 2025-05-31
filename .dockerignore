@@ -1,9 +1,0 @@
-node_modules
-.git
-.next
-.swc
-build
-coverage
-junit.yml
-playwright-report
-test-results

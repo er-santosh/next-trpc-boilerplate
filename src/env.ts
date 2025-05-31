@@ -12,6 +12,11 @@ export const env = createEnv({
       .enum(['true', 'false'])
       .optional()
       .transform(value => value === 'true'),
+    DATABASE_URL: z.string().url(),
+    DB_MIGRATIONS_ENABLED: z
+      .enum(['true', 'false'])
+      .optional()
+      .transform(value => value === 'true'),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string(),
@@ -23,6 +28,8 @@ export const env = createEnv({
   runtimeEnv: {
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     ANALYZE: process.env.ANALYZE,
+    DATABASE_URL: process.env.DATABASE_URL,
+    DB_MIGRATIONS_ENABLED: process.env.DB_MIGRATIONS_ENABLED,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

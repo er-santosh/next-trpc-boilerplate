@@ -14,6 +14,8 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 import { ZodError } from 'zod';
 
+import { db } from '@/db';
+
 /**
  * Defines your context shape.
  * Add fields here that the inner context brings.
@@ -55,7 +57,7 @@ export const createTRPCContext = async (opts: CreateContextOptions) => {
   return {
     ...opts,
     session, //TODO: Replace with actual session retrieval logic
-    db: null, // TODO: Replace with actual database connection logic
+    db,
   };
 };
 export type TRPCContext = Awaited<ReturnType<typeof createTRPCContext>>;
