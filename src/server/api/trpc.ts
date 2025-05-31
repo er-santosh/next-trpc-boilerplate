@@ -8,11 +8,15 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
+import { headers } from 'next/headers';
 import type { NextRequest } from 'next/server';
 
 import { initTRPC, TRPCError } from '@trpc/server';
+import type { User } from 'better-auth';
 import superjson from 'superjson';
 import { ZodError } from 'zod';
+
+import { auth } from '@/server/auth';
 
 import { db } from '@/db';
 
@@ -24,12 +28,6 @@ interface CreateContextOptions {
   headers: Headers;
   req: NextRequest;
 }
-
-type User = {
-  id: string | null;
-  name: string | null;
-  email: string | null;
-};
 
 /**
  * 1. CONTEXT
@@ -44,19 +42,14 @@ type User = {
  * @see https://trpc.io/docs/server/context
  */
 export const createTRPCContext = async (opts: CreateContextOptions) => {
-  const user: User | null = {
-    id: null,
-    email: null,
-    name: null,
-  }; // TODO: Replace with actual user retrieval logic, e.g., from a database
-  const session = {
-    user,
-    expires: new Date(Date.now() + 60 * 60 * 1000).toISOString(), // Example expiration time
-  };
+  'use server';
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
   return {
     ...opts,
-    session, //TODO: Replace with actual session retrieval logic
+    session,
     db,
   };
 };
@@ -119,7 +112,9 @@ const enforceUserIsAuthenticated = t.middleware(async opts => {
   }
 
   try {
-    const user: User | null = null; // TODO: Replace with actual user retrieval logic, e.g., from a database
+    const user = await opts.ctx.db.query.user.findFirst({
+      where: (users, { eq }) => eq(users.id, session.user.id),
+    });
 
     if (!user) {
       throw new TRPCError({

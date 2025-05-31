@@ -2,6 +2,7 @@ import { FaGithub, FaRocket } from 'react-icons/fa6';
 
 import LocaleSwitcher from '@/components/common/locale-switcher';
 import ThemeToggler from '@/components/common/theme-toggler';
+import ProfileMenu from '@/components/features/auth/profile-menu';
 import { Button } from '@/components/ui/button';
 
 import siteConfig from '@/configs/site-config';
@@ -25,9 +26,7 @@ const Navbar = () => (
               <span className="sr-only">GitHub</span>
             </Link>
           </Button>
-          <Button asChild>
-            <Link href={'#'}>Get Started</Link>
-          </Button>
+          <ProfileMenu />
           <ThemeToggler />
           <LocaleSwitcher />
         </nav>

@@ -17,6 +17,9 @@ export const env = createEnv({
       .enum(['true', 'false'])
       .optional()
       .transform(value => value === 'true'),
+    BETTER_AUTH_SECRET: z.string(),
+    GOOGLE_CLIENT_ID: z.string(),
+    GOOGLE_CLIENT_SECRET: z.string(),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string(),
@@ -30,6 +33,9 @@ export const env = createEnv({
     ANALYZE: process.env.ANALYZE,
     DATABASE_URL: process.env.DATABASE_URL,
     DB_MIGRATIONS_ENABLED: process.env.DB_MIGRATIONS_ENABLED,
+    BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+    GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
