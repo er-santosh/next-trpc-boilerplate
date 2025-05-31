@@ -96,8 +96,5 @@
     "stylelintcache",
     "turbopack",
     "Turso"
-  ],
-  "[prisma]": {
-    "editor.defaultFormatter": "Prisma.prisma"
-  }
+  ]
 }

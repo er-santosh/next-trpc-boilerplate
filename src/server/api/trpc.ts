@@ -14,10 +14,6 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import superjson from 'superjson';
 import { ZodError } from 'zod';
 
-import { auth } from '@/server/auth';
-
-import { db } from '@/db';
-
 /**
  * Defines your context shape.
  * Add fields here that the inner context brings.
@@ -26,6 +22,12 @@ interface CreateContextOptions {
   headers: Headers;
   req: NextRequest;
 }
+
+type User = {
+  id: string | null;
+  name: string | null;
+  email: string | null;
+};
 
 /**
  * 1. CONTEXT
@@ -39,11 +41,23 @@ interface CreateContextOptions {
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (opts: CreateContextOptions) => ({
-  ...opts,
-  session: await auth(),
-  db,
-});
+export const createTRPCContext = async (opts: CreateContextOptions) => {
+  const user: User | null = {
+    id: null,
+    email: null,
+    name: null,
+  }; // TODO: Replace with actual user retrieval logic, e.g., from a database
+  const session = {
+    user,
+    expires: new Date(Date.now() + 60 * 60 * 1000).toISOString(), // Example expiration time
+  };
+
+  return {
+    ...opts,
+    session, //TODO: Replace with actual session retrieval logic
+    db: null, // TODO: Replace with actual database connection logic
+  };
+};
 export type TRPCContext = Awaited<ReturnType<typeof createTRPCContext>>;
 
 /**
@@ -95,7 +109,7 @@ type ProtectedProcedureOpts = TRPCContext;
 const enforceUserIsAuthenticated = t.middleware(async opts => {
   const session = opts.ctx.session;
 
-  if (!session || !session.user.id) {
+  if (!session || !session.user?.id) {
     throw new TRPCError({
       code: 'UNAUTHORIZED',
       message: 'You must be logged in to perform this action',
@@ -103,11 +117,7 @@ const enforceUserIsAuthenticated = t.middleware(async opts => {
   }
 
   try {
-    const user = await opts.ctx.db.user.findUnique({
-      where: {
-        id: session.user.id,
-      },
-    });
+    const user: User | null = null; // TODO: Replace with actual user retrieval logic, e.g., from a database
 
     if (!user) {
       throw new TRPCError({
@@ -123,7 +133,7 @@ const enforceUserIsAuthenticated = t.middleware(async opts => {
           ...session,
           user: {
             ...session.user,
-            ...user,
+            ...(user as User),
           },
         },
       } satisfies ProtectedProcedureOpts,

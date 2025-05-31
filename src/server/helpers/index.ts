@@ -1,10 +1,6 @@
-import { api } from '@/trpc/server';
-
-import type { MeQueryResult } from '@/server/api/routers/auth/types';
-
-export const getMe = async (): Promise<MeQueryResult | null> => {
+export const getMe = async (): Promise<null> => {
   try {
-    return await api.auth.me();
+    throw new Error('getMe is not implemented');
   } catch {
     return null;
   }

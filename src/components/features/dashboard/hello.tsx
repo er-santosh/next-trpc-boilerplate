@@ -1,10 +1,7 @@
 import { getTranslations } from 'next-intl/server';
 
-import { auth } from '@/server/auth';
-
 const Hello = async () => {
   const t = await getTranslations('Pages.dashboard');
-  const session = await auth();
 
   return (
     <>
@@ -12,7 +9,7 @@ const Hello = async () => {
         👋{' '}
         <span
           dangerouslySetInnerHTML={{
-            __html: t('hello_message', { email: session?.user?.email || '' }),
+            __html: t('hello_message', { email: 'hello@EXAMPLE.COM' }),
           }}
         />
       </p>
