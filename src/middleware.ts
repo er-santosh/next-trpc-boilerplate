@@ -9,7 +9,7 @@ import siteConfig from '@/configs/site-config';
 import {
   APP_ROUTES,
   AUTH_ROUTES,
-  DEFAULT_SIGNIN_REDIRECT_ROUTE,
+  DEFAULT_AUTHENTICATED_REDIRECT_ROUTE,
   PUBLIC_ROUTES,
 } from '@/constants/app-routes';
 import { COOKIES } from '@/constants/cookies';
@@ -40,7 +40,7 @@ export default function middleware(req: NextRequest): NextResponse {
   }
 
   if (isAuthRoute && isLoggedIn) {
-    return NextResponse.redirect(new URL(DEFAULT_SIGNIN_REDIRECT_ROUTE, nextUrl));
+    return NextResponse.redirect(new URL(DEFAULT_AUTHENTICATED_REDIRECT_ROUTE, nextUrl));
   }
 
   if (!isLoggedIn && !isAuthRoute) {

@@ -16,7 +16,7 @@ import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 
-import { APP_ROUTES, DEFAULT_SIGNIN_REDIRECT_ROUTE } from '@/constants/app-routes';
+import { APP_ROUTES, DEFAULT_AUTHENTICATED_REDIRECT_ROUTE } from '@/constants/app-routes';
 
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
@@ -28,7 +28,7 @@ interface SignInFormProps {
 }
 
 export default function SignInForm({
-  callbackUrl = DEFAULT_SIGNIN_REDIRECT_ROUTE,
+  callbackUrl = DEFAULT_AUTHENTICATED_REDIRECT_ROUTE,
 }: SignInFormProps) {
   const [isLoading, setLoading] = useState(false);
 
@@ -80,7 +80,7 @@ export default function SignInForm({
           <div className="flex items-center justify-between">
             <Label htmlFor="password">Password</Label>
             <Link
-              href="/auth/forgot-password"
+              href={APP_ROUTES.AUTH.FORGOT_PASSWORD}
               className="text-sm font-medium text-primary underline-offset-4 hover:underline"
             >
               Forgot password?

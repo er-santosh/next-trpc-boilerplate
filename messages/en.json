@@ -31,6 +31,18 @@
     "sign_up": {
       "meta_title": "Sign up",
       "meta_description": "Effortlessly create an account through our intuitive sign-up process."
+    },
+    "forgot_password": {
+      "meta_title": "Forgot Password",
+      "meta_description": "Reset your password easily with our secure password recovery process."
+    },
+    "reset_password": {
+      "meta_title": "Reset Password",
+      "meta_description": "Set a new password securely with our password reset feature."
+    },
+    "account": {
+      "meta_title": "Account",
+      "meta_description": "Manage your account settings and preferences in one convenient place."
     }
   }
 }

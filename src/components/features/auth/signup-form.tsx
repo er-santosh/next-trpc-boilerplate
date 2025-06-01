@@ -17,7 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 
-import { APP_ROUTES, DEFAULT_SIGNUP_REDIRECT_ROUTE } from '@/constants/app-routes';
+import { APP_ROUTES, DEFAULT_AUTHENTICATED_REDIRECT_ROUTE } from '@/constants/app-routes';
 
 import { authClient } from '@/lib/auth-client';
 import { cn } from '@/lib/utils';
@@ -29,7 +29,7 @@ interface SignUpFormProps {
 }
 
 export default function SignUpForm({
-  callbackUrl = DEFAULT_SIGNUP_REDIRECT_ROUTE,
+  callbackUrl = DEFAULT_AUTHENTICATED_REDIRECT_ROUTE,
 }: SignUpFormProps) {
   const [isLoading, setLoading] = useState(false);
 

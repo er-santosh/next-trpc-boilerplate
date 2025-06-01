@@ -7,7 +7,7 @@ import ThemeToggler from '@/components/common/theme-toggler';
 import SocialLogins from '@/components/features/auth/social-logins';
 import { Separator } from '@/components/ui/separator';
 
-import { DEFAULT_SIGNIN_REDIRECT_ROUTE } from '@/constants/app-routes';
+import { DEFAULT_AUTHENTICATED_REDIRECT_ROUTE } from '@/constants/app-routes';
 
 interface AuthLayoutProps extends PropsWithChildren {
   title: string;
@@ -21,7 +21,7 @@ const AuthLayout = ({
   title,
   description,
   showSocialLogin = true,
-  callbackUrl = DEFAULT_SIGNIN_REDIRECT_ROUTE,
+  callbackUrl = DEFAULT_AUTHENTICATED_REDIRECT_ROUTE,
 }: AuthLayoutProps) => (
   <div className="flex min-h-screen">
     <div className="hidden w-1/2 bg-muted lg:block">

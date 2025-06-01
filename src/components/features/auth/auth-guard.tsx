@@ -6,7 +6,11 @@ import { usePathname, useSearchParams } from 'next/navigation';
 
 import Loader from '@/components/ui/loader';
 
-import { APP_ROUTES, AUTH_ROUTES, DEFAULT_SIGNIN_REDIRECT_ROUTE } from '@/constants/app-routes';
+import {
+  APP_ROUTES,
+  AUTH_ROUTES,
+  DEFAULT_AUTHENTICATED_REDIRECT_ROUTE,
+} from '@/constants/app-routes';
 
 import useSession from '@/hooks/use-session';
 
@@ -26,7 +30,7 @@ export const AuthGuard: React.FC<PropsWithChildren> = ({ children }) => {
     }
 
     if (session.isAuthenticated && isAuthRoute) {
-      router.push(DEFAULT_SIGNIN_REDIRECT_ROUTE);
+      router.push(DEFAULT_AUTHENTICATED_REDIRECT_ROUTE);
 
       return;
     }

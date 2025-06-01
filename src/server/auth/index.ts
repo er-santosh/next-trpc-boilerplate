@@ -1,7 +1,13 @@
+import { createElement } from 'react';
+
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 
+import PasswordResetRequestTemplate from '@/components/email-templates/password-reset-request';
+
 import { COOKIES } from '@/constants/cookies';
+
+import { sendEmail } from '@/lib/resend';
 
 import { db } from '@/db';
 import * as schema from '@/db/schema';
@@ -17,6 +23,17 @@ export const auth = betterAuth({
   },
   emailAndPassword: {
     enabled: true,
+    sendResetPassword: async ({ user, url }) => {
+      await sendEmail({
+        from: env.RESEND_FROM,
+        to: user.email,
+        subject: 'Reset your password',
+        react: createElement(PasswordResetRequestTemplate, {
+          name: user.name,
+          resetLink: url,
+        }),
+      });
+    },
   },
   socialProviders: {
     google: {

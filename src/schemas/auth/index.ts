@@ -18,3 +18,24 @@ export const SignUpSchema = SignInSchema.extend({
 });
 
 export type SignUpInput = z.infer<typeof SignUpSchema>;
+
+export const ForgotPasswordSchema = z.object({
+  email: z.string().min(1, 'Email is required').email(),
+});
+
+export type ForgotPasswordInput = z.infer<typeof ForgotPasswordSchema>;
+export const ResetPasswordSchema = z
+  .object({
+    password: z.string().min(1, 'Password is required'),
+    confirm_password: z.string().min(1, 'Confirm Password is required'),
+  })
+  .superRefine((data, ctx) => {
+    if (data.password !== data.confirm_password) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Passwords do not match',
+        path: ['confirm_password'],
+      });
+    }
+  });
+export type ResetPasswordInput = z.infer<typeof ResetPasswordSchema>;
