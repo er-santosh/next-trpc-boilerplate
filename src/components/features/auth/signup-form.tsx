@@ -9,17 +9,18 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { FaEnvelope } from 'react-icons/fa6';
 
+import CheckboxField from '@/components/common/form/checkbox-field';
 import EmailField from '@/components/common/form/email-field';
 import InputField from '@/components/common/form/input-field';
 import PasswordField from '@/components/common/form/password-field';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Form } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 
 import { APP_ROUTES, DEFAULT_SIGNUP_REDIRECT_ROUTE } from '@/constants/app-routes';
 
 import { authClient } from '@/lib/auth-client';
+import { cn } from '@/lib/utils';
 
 import { SignUpSchema, type SignUpInput } from '@/schemas/auth';
 
@@ -80,10 +81,13 @@ export default function SignUpForm({
         <PasswordField label="Password" name="password" control={form.control} />
 
         <div className="flex items-center space-x-2">
-          <Checkbox id="terms_and_conditions" />
+          <CheckboxField name="agree_to_terms" control={form.control} label="" />
           <Label
             htmlFor="terms_and_conditions"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            className={cn(
+              'text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70',
+              { 'text-destructive': form.formState.errors.agree_to_terms }
+            )}
           >
             I agree the <Link href={'#'}>terms and conditions</Link>
           </Label>
