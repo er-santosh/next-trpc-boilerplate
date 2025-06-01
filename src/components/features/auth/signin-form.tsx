@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { FaEnvelope } from 'react-icons/fa6';
 
+import CheckboxField from '@/components/common/form/checkbox-field';
 import EmailField from '@/components/common/form/email-field';
 import PasswordField from '@/components/common/form/password-field';
 import { Button } from '@/components/ui/button';
@@ -36,6 +37,7 @@ export default function SignInForm({
     defaultValues: {
       email: '',
       password: '',
+      remember_me: false,
     },
   });
 
@@ -46,6 +48,7 @@ export default function SignInForm({
       await authClient.signIn.email(
         {
           ...values,
+          rememberMe: values.remember_me,
           callbackURL: callbackUrl,
         },
         {
@@ -84,6 +87,7 @@ export default function SignInForm({
             </Link>
           </div>
           <PasswordField name="password" control={form.control} />
+          <CheckboxField label="Remember me" name="remember_me" control={form.control} />
         </div>
 
         <Button type="submit" isLoading={isLoading} className={cn('w-full')}>
