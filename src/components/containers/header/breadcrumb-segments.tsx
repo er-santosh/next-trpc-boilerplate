@@ -13,7 +13,7 @@ import {
 
 import { APP_ROUTES } from '@/constants/app-routes';
 
-import { usePathname } from '@/i18n/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
 
 interface BreadcrumbSegment {
   label: string;
@@ -75,7 +75,9 @@ export function BreadcrumbSegments() {
             <Fragment key={index}>
               <BreadcrumbItem>
                 {segment.href && !isLast ? (
-                  <BreadcrumbLink href={segment.href}>{segment.label}</BreadcrumbLink>
+                  <BreadcrumbLink asChild>
+                    <Link href={segment.href}>{segment.label}</Link>
+                  </BreadcrumbLink>
                 ) : (
                   <BreadcrumbPage>{segment.label}</BreadcrumbPage>
                 )}
