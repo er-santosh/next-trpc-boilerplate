@@ -26,7 +26,7 @@ const LocaleSwitcher = () => {
 
   return (
     <Select defaultValue={locale} onValueChange={handleChange}>
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger>
         <SelectValue placeholder="Theme" />
       </SelectTrigger>
       <SelectContent>

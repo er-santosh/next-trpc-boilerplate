@@ -3,7 +3,6 @@
 import { FaRightFromBracket } from 'react-icons/fa6';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,27 +14,27 @@ import {
 
 import { APP_ROUTES } from '@/constants/app-routes';
 
-import { Link } from '@/i18n/navigation';
+import useSession from '@/hooks/use-session';
+
+import { useRouter } from '@/i18n/navigation';
 
 import { authClient } from '@/lib/auth-client';
 
 export function ProfileMenu() {
-  const { data: session, isPending } = authClient.useSession();
-
-  const user = session?.user;
+  const router = useRouter();
+  const { user } = useSession();
 
   const onLogout = async () => {
-    await authClient.signOut();
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push(APP_ROUTES.AUTH.SIGN_IN);
+        },
+      },
+    });
   };
 
-  if (isPending) return null;
-
-  if (!user)
-    return (
-      <Button asChild>
-        <Link href={APP_ROUTES.AUTH.SIGN_IN}>Get Started</Link>
-      </Button>
-    );
+  if (!user) return null;
 
   return (
     <DropdownMenu>

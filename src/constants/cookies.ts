@@ -1,3 +1,3 @@
-export const COOKIE_NAMES = {
-  SESSION_TOKEN: 'nextjs-boilerplate.session-token',
+export const COOKIES = {
+  SESSION_TOKEN_PREFIX: 'nextjs-boilerplate',
 } as const;

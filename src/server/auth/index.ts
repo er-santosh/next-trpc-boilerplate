@@ -1,7 +1,7 @@
 import { betterAuth } from 'better-auth';
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 
-import { COOKIE_NAMES } from '@/constants/cookies';
+import { COOKIES } from '@/constants/cookies';
 
 import { db } from '@/db';
 import * as schema from '@/db/schema';
@@ -13,11 +13,7 @@ export const auth = betterAuth({
     schema,
   }),
   advanced: {
-    cookies: {
-      session_token: {
-        name: COOKIE_NAMES.SESSION_TOKEN,
-      },
-    },
+    cookiePrefix: COOKIES.SESSION_TOKEN_PREFIX,
   },
   emailAndPassword: {
     enabled: true,

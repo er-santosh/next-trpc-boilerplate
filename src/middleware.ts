@@ -12,6 +12,7 @@ import {
   DEFAULT_SIGNIN_REDIRECT_ROUTE,
   PUBLIC_ROUTES,
 } from '@/constants/app-routes';
+import { COOKIES } from '@/constants/cookies';
 
 import { routing } from '@/i18n/routing';
 
@@ -24,7 +25,9 @@ const testPathnameRegex = (pages: string[], pathName: string): boolean =>
   ).test(pathName);
 
 export default function middleware(req: NextRequest): NextResponse {
-  const sessionCookie = getSessionCookie(req);
+  const sessionCookie = getSessionCookie(req, {
+    cookiePrefix: COOKIES.SESSION_TOKEN_PREFIX,
+  });
 
   const isLoggedIn = !!sessionCookie;
   const nextUrl = req.nextUrl;
@@ -32,14 +35,16 @@ export default function middleware(req: NextRequest): NextResponse {
   const isAuthRoute = testPathnameRegex(AUTH_ROUTES, pathname);
   const isPublicRoute = testPathnameRegex(PUBLIC_ROUTES, pathname);
 
-  if (!isPublicRoute) {
-    if (isAuthRoute && isLoggedIn) {
-      return NextResponse.redirect(new URL(DEFAULT_SIGNIN_REDIRECT_ROUTE, nextUrl));
-    }
+  if (isPublicRoute) {
+    return intlMiddleware(req);
+  }
 
-    if (!isLoggedIn && !isAuthRoute) {
-      return NextResponse.redirect(new URL(APP_ROUTES.AUTH.SIGN_IN, nextUrl));
-    }
+  if (isAuthRoute && isLoggedIn) {
+    return NextResponse.redirect(new URL(DEFAULT_SIGNIN_REDIRECT_ROUTE, nextUrl));
+  }
+
+  if (!isLoggedIn && !isAuthRoute) {
+    return NextResponse.redirect(new URL(APP_ROUTES.AUTH.SIGN_IN, nextUrl));
   }
 
   return intlMiddleware(req);
