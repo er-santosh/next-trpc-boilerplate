@@ -10,7 +10,7 @@ import { APP_ROUTES } from '@/constants/app-routes';
 
 import { Link } from '@/i18n/navigation';
 
-const Navbar = () => (
+const Header = () => (
   <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
     <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
       <div className="flex gap-6 md:gap-10">
@@ -38,4 +38,4 @@ const Navbar = () => (
   </header>
 );
 
-export default Navbar;
+export default Header;

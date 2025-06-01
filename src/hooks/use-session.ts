@@ -15,7 +15,7 @@ const useSession = (): UseSessionResponse => {
   const session = authClient.useSession();
 
   const user = session?.data?.user;
-  const isAuthenticated = Boolean(user);
+  const isAuthenticated = Boolean(session.data);
 
   return {
     ...session,

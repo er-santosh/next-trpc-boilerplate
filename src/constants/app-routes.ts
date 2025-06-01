@@ -6,6 +6,7 @@ export const APP_ROUTES = {
   },
   DASHBOARD: {
     ROOT: '/dashboard',
+    ACCOUNT: '/dashboard/account',
   },
 };
 
