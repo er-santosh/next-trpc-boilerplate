@@ -85,15 +85,15 @@ const nextConfig: NextConfig = {
 
     return config;
   },
-  experimental: {
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
+  turbopack: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
       },
     },
+  },
+  experimental: {
     // A list of packages that Next.js should automatically evaluate and optimise the imports for.
     // @see https://vercel.com/blog/how-we-optimized-package-imports-in-next-js
     optimizePackageImports: [
