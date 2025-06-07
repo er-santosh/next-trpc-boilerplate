@@ -18,11 +18,14 @@ import { routing } from '@/i18n/routing';
 
 const intlMiddleware = createMiddleware(routing);
 
-const testPathnameRegex = (pages: string[], pathName: string): boolean =>
-  RegExp(
+const testPathnameRegex = (pages: string[], pathName: string): boolean => {
+  if (pages.length === 0) return false;
+
+  return RegExp(
     `^(/(${siteConfig.locale.locales.join('|')}))?(${pages.flatMap(p => (p === '/' ? ['', '/'] : p)).join('|')})/?$`,
     'i'
   ).test(pathName);
+};
 
 export default function middleware(req: NextRequest): NextResponse {
   const sessionCookie = getSessionCookie(req, {

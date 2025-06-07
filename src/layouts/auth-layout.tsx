@@ -9,6 +9,8 @@ import { Separator } from '@/components/ui/separator';
 
 import { DEFAULT_AUTHENTICATED_REDIRECT_ROUTE } from '@/constants/app-routes';
 
+import loginBg from '@/public/static/images/login-bg.jpg';
+
 interface AuthLayoutProps extends PropsWithChildren {
   title: string;
   description?: string;
@@ -27,11 +29,12 @@ const AuthLayout = ({
     <div className="hidden w-1/2 bg-muted lg:block">
       <div className="relative h-full w-full">
         <Image
-          src="/static/images/login-bg.jpg"
+          src={loginBg}
           alt="Authentication background"
           fill
           className="object-cover"
           priority
+          placeholder="blur"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-background/20" />
         <div className="absolute bottom-12 left-12 max-w-md text-white">

@@ -42,19 +42,7 @@ export const AuthGuard: React.FC<PropsWithChildren> = ({ children }) => {
     }
   }, [session.isAuthenticated, session.isPending, pathname, router, searchParams, isAuthRoute]);
 
-  if (session.isPending) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <Loader />
-      </div>
-    );
-  }
-
-  if (!session.isAuthenticated && isAuthRoute) {
-    return <>{children}</>;
-  }
-
-  if (session.isAuthenticated && !isAuthRoute) {
+  if ((!session.isAuthenticated && isAuthRoute) || (session.isAuthenticated && !isAuthRoute)) {
     return <>{children}</>;
   }
 
