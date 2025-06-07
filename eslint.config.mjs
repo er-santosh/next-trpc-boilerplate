@@ -1,4 +1,5 @@
 import { FlatCompat } from '@eslint/eslintrc';
+import eslintPluginNext from '@next/eslint-plugin-next';
 import typescriptEslintParser from '@typescript-eslint/parser';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import importHelpers from 'eslint-plugin-import-helpers';
@@ -52,6 +53,7 @@ const eslintConfig = [
       'unused-imports': unusedImports,
       prettier: prettierPlugin,
       'react-hooks': pluginReactHooks,
+      '@next/eslint-plugin-next': eslintPluginNext,
     },
     settings: { react: { version: 'detect' } },
     rules: {

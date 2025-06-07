@@ -96,6 +96,7 @@
     "@commitlint/cz-commitlint": "^19.8.1",
     "@eslint/eslintrc": "^3.3.1",
     "@next/bundle-analyzer": "^15.3.3",
+    "@next/eslint-plugin-next": "^15.3.3",
     "@percy/cli": "^1.30.11",
     "@percy/playwright": "^1.0.8",
     "@playwright/test": "^1.52.0",
