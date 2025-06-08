@@ -112,8 +112,10 @@ const enforceUserIsAuthenticated = t.middleware(async opts => {
   }
 
   try {
-    const user = await opts.ctx.db.query.user.findFirst({
-      where: (users, { eq }) => eq(users.id, session.user.id),
+    const user = await opts.ctx.db.user.findUnique({
+      where: {
+        id: session.user.id,
+      },
     });
 
     if (!user) {

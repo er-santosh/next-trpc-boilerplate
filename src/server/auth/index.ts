@@ -1,7 +1,7 @@
 import { createElement } from 'react';
 
 import { betterAuth } from 'better-auth';
-import { drizzleAdapter } from 'better-auth/adapters/drizzle';
+import { prismaAdapter } from 'better-auth/adapters/prisma';
 
 import PasswordResetRequestTemplate from '@/components/email-templates/password-reset-request';
 
@@ -10,13 +10,11 @@ import { COOKIES } from '@/constants/cookies';
 import { sendEmail } from '@/lib/resend';
 
 import { db } from '@/db';
-import * as schema from '@/db/schema';
 
 import { env } from '@/env';
 export const auth = betterAuth({
-  database: drizzleAdapter(db, {
-    provider: 'pg',
-    schema,
+  database: prismaAdapter(db, {
+    provider: 'postgresql',
   }),
   advanced: {
     cookiePrefix: COOKIES.SESSION_TOKEN_PREFIX,

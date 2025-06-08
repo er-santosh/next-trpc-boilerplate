@@ -37,7 +37,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/public/*": ["./public/*"],
-      "@/messages/*": ["./messages/*"]
+      "@/messages/*": ["./messages/*"],
+      "@/generated/*": ["./generated/*"]
     }
   },
   "mdx": {

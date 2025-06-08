@@ -61,3 +61,4 @@ next15-boilerplate.db
 
 # redis
 dump.rdb
+/generated/prisma

@@ -1,20 +1,9 @@
-import { drizzle } from 'drizzle-orm/node-postgres';
-import { migrate } from 'drizzle-orm/node-postgres/migrator';
-import { Pool } from 'pg';
+import { PrismaClient } from '@/generated/prisma';
 
-import * as schema from '@/db/schema';
+const globalForPrisma = global as unknown as { prisma?: PrismaClient };
 
-import { env } from '@/env';
+const db = globalForPrisma.prisma ?? new PrismaClient();
 
-export const pool = new Pool({ connectionString: env.DATABASE_URL });
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = db;
 
-export const db = drizzle(pool, {
-  schema,
-});
-
-// Disable migrate function if using Edge runtime and use `npm run db:migrate` instead.
-// Only run migrate in development. Otherwise, migrate will also be run during the build which can cause errors.
-// Migrate during the build can cause errors due to the locked database when multiple migrations are running at the same time.
-if (env.DB_MIGRATIONS_ENABLED) {
-  migrate(db, { migrationsFolder: './migrations' }).catch(_error => {});
-}
+export { db };

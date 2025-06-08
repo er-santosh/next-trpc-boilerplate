@@ -151,6 +151,7 @@ const eslintConfig = [
             '/^@/types/',
             '/^@/styles/',
             '/^@/public/',
+            '/^@/generated/',
             ['parent', 'sibling', 'index'],
           ],
           alphabetize: { order: 'asc', ignoreCase: true },
