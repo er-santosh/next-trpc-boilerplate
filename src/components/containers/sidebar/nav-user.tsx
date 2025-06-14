@@ -1,12 +1,12 @@
 'use client';
 
 import {
-  IconCreditCard,
-  IconDotsVertical,
-  IconLogout,
-  IconNotification,
-  IconUserCircle,
-} from '@tabler/icons-react';
+  LuBell,
+  LuCircleUserRound,
+  LuCreditCard,
+  LuEllipsisVertical,
+  LuLogOut,
+} from 'react-icons/lu';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -63,7 +63,7 @@ export function NavUser() {
                 <span className="truncate font-medium">{user?.name}</span>
                 <span className="text-muted-foreground truncate text-xs">{user?.email}</span>
               </div>
-              <IconDotsVertical className="ml-auto size-4" />
+              <LuEllipsisVertical className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -89,21 +89,21 @@ export function NavUser() {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem onClick={() => router.push(APP_ROUTES.DASHBOARD.ACCOUNT)}>
-                <IconUserCircle />
+                <LuCircleUserRound />
                 Account
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <IconCreditCard />
+                <LuCreditCard />
                 Billing
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <IconNotification />
+                <LuBell />
                 Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={onLogout}>
-              <IconLogout />
+              <LuLogOut />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>

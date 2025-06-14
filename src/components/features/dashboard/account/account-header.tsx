@@ -1,5 +1,5 @@
 import type { User } from 'better-auth';
-import { Camera } from 'lucide-react';
+import { LuCamera } from 'react-icons/lu';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -28,7 +28,7 @@ export function AccountHeader({ user }: AccountHeaderProps) {
               variant="outline"
               className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full"
             >
-              <Camera className="h-4 w-4" />
+              <LuCamera className="h-4 w-4" />
             </Button>
           </div>
 

@@ -3,22 +3,21 @@
 import * as React from 'react';
 
 import {
-  IconCamera,
-  IconChartBar,
-  IconDashboard,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
-  IconHelp,
-  IconListDetails,
-  IconReport,
-  IconSearch,
-  IconSettings,
-  IconUsers,
-} from '@tabler/icons-react';
-import { AudioWaveform, Command, GalleryVerticalEnd } from 'lucide-react';
+  LuAudioWaveform,
+  LuBadgeHelp,
+  LuChartBar,
+  LuCircleGauge,
+  LuClipboardMinus,
+  LuCommand,
+  LuDatabase,
+  LuFolder,
+  LuGalleryVerticalEnd,
+  LuLayoutList,
+  LuSearch,
+  LuSettings,
+  LuUsers,
+  LuWholeWord,
+} from 'react-icons/lu';
 
 import { TeamSwitcher } from '@/components/common/team-switcher';
 import { NavDocuments } from '@/components/containers/sidebar/nav-documents';
@@ -31,17 +30,17 @@ const data = {
   teams: [
     {
       name: 'Acme Inc',
-      logo: GalleryVerticalEnd,
+      logo: LuGalleryVerticalEnd,
       plan: 'Enterprise',
     },
     {
       name: 'Acme Corp.',
-      logo: AudioWaveform,
+      logo: LuAudioWaveform,
       plan: 'Startup',
     },
     {
       name: 'Evil Corp.',
-      logo: Command,
+      logo: LuCommand,
       plan: 'Free',
     },
   ],
@@ -49,109 +48,61 @@ const data = {
     {
       title: 'Dashboard',
       url: '#',
-      icon: IconDashboard,
+      icon: LuCircleGauge,
     },
     {
       title: 'Lifecycle',
       url: '#',
-      icon: IconListDetails,
+      icon: LuLayoutList,
     },
     {
       title: 'Analytics',
       url: '#',
-      icon: IconChartBar,
+      icon: LuChartBar,
     },
     {
       title: 'Projects',
       url: '#',
-      icon: IconFolder,
+      icon: LuFolder,
     },
     {
       title: 'Team',
       url: '#',
-      icon: IconUsers,
-    },
-  ],
-  navClouds: [
-    {
-      title: 'Capture',
-      icon: IconCamera,
-      isActive: true,
-      url: '#',
-      items: [
-        {
-          title: 'Active Proposals',
-          url: '#',
-        },
-        {
-          title: 'Archived',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Proposal',
-      icon: IconFileDescription,
-      url: '#',
-      items: [
-        {
-          title: 'Active Proposals',
-          url: '#',
-        },
-        {
-          title: 'Archived',
-          url: '#',
-        },
-      ],
-    },
-    {
-      title: 'Prompts',
-      icon: IconFileAi,
-      url: '#',
-      items: [
-        {
-          title: 'Active Proposals',
-          url: '#',
-        },
-        {
-          title: 'Archived',
-          url: '#',
-        },
-      ],
+      icon: LuUsers,
     },
   ],
   navSecondary: [
     {
       title: 'Settings',
       url: '#',
-      icon: IconSettings,
+      icon: LuSettings,
     },
     {
       title: 'Get Help',
       url: '#',
-      icon: IconHelp,
+      icon: LuBadgeHelp,
     },
     {
       title: 'Search',
       url: '#',
-      icon: IconSearch,
+      icon: LuSearch,
     },
   ],
   documents: [
     {
       name: 'Data Library',
       url: '#',
-      icon: IconDatabase,
+      icon: LuDatabase,
     },
     {
       name: 'Reports',
       url: '#',
-      icon: IconReport,
+      icon: LuClipboardMinus,
     },
     {
       name: 'Word Assistant',
       url: '#',
-      icon: IconFileWord,
+      icon: LuWholeWord,
     },
   ],
 };
