@@ -26,6 +26,8 @@ import { NavSecondary } from '@/components/containers/sidebar/nav-secondary';
 import { NavUser } from '@/components/containers/sidebar/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from '@/components/ui/sidebar';
 
+import { APP_ROUTES } from '@/constants/app-routes';
+
 const data = {
   teams: [
     {
@@ -47,7 +49,7 @@ const data = {
   navMain: [
     {
       title: 'Dashboard',
-      url: '#',
+      url: APP_ROUTES.DASHBOARD.ROOT,
       icon: LuCircleGauge,
     },
     {
@@ -66,8 +68,8 @@ const data = {
       icon: LuFolder,
     },
     {
-      title: 'Team',
-      url: '#',
+      title: 'Users',
+      url: APP_ROUTES.DASHBOARD.USERS,
       icon: LuUsers,
     },
   ],

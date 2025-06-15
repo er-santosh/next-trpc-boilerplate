@@ -1,35 +1,13 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-
-import { FaArrowRight } from 'react-icons/fa6';
-
 import ErrorLayout from '@/layouts/error-layout';
 
-import { Button } from '@/components/ui/button';
+import ErrorState from '@/components/common/error-state';
 
-import { Link } from '@/i18n/navigation';
-
-const NotFoundPage = () => {
-  const t = useTranslations();
-
-  return (
-    <ErrorLayout>
-      <main className="flex flex-col gap-3 text-center items-center justify-center">
-        <h1 className="text-4xl font-semibold"> 404 </h1>
-        <h1 className="special mt-4">{t('Layouts.error.notFound.title')}</h1>
-        <p className="mt-4 max-w-sm text-center text-lg">
-          {t('Layouts.error.notFound.description')}
-        </p>
-        <Button asChild>
-          <Link href={'/'}>
-            {t('Layouts.error.backToHome')}
-            <FaArrowRight />
-          </Link>
-        </Button>
-      </main>
-    </ErrorLayout>
-  );
-};
+const NotFoundPage = () => (
+  <ErrorLayout>
+    <ErrorState code={404} message="Page Not Found" />
+  </ErrorLayout>
+);
 
 export default NotFoundPage;

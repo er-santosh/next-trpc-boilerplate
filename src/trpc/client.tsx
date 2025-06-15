@@ -1,41 +1,19 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, type PropsWithChildren } from 'react';
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink, loggerLink } from '@trpc/client';
 import { createTRPCReact } from '@trpc/react-query';
 
-import { isTRPCClientErrorWithCode } from '@/utils/is-trpc-client-error-with-code';
-
-import { transformer } from '@/trpc/shared';
+import { getQueryClient, getUrl, transformer } from '@/trpc/shared';
 
 import { type AppRouter } from '@/server/api/root';
 
 export const api = createTRPCReact<AppRouter>();
 
-type Props = {
-  children: React.ReactNode;
-};
-
-export const TRPCReactProvider: React.FC<Props> = props => {
-  const queryClient = useMemo(
-    () =>
-      new QueryClient({
-        defaultOptions: {
-          queries: {
-            retry(failureCount, error) {
-              if (isTRPCClientErrorWithCode(error) && error.data.code === 'UNAUTHORIZED') {
-                return false;
-              }
-
-              return failureCount < 2;
-            },
-          },
-        },
-      }),
-    []
-  );
+export const TRPCReactProvider: React.FC<PropsWithChildren> = props => {
+  const queryClient = getQueryClient();
 
   const trpcClient = useMemo(
     () =>
@@ -47,7 +25,7 @@ export const TRPCReactProvider: React.FC<Props> = props => {
               (op.direction === 'down' && op.result instanceof Error),
           }),
           httpBatchLink({
-            url: '/api/trpc',
+            url: getUrl(),
             transformer,
           }),
         ],

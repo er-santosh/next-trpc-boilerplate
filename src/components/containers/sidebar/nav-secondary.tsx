@@ -12,6 +12,8 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 
+import { Link, usePathname } from '@/i18n/navigation';
+
 export function NavSecondary({
   items,
   ...props
@@ -22,17 +24,19 @@ export function NavSecondary({
     icon: IconType;
   }[];
 } & React.ComponentPropsWithoutRef<typeof SidebarGroup>) {
+  const pathname = usePathname();
+
   return (
     <SidebarGroup {...props}>
       <SidebarGroupContent>
         <SidebarMenu>
           {items.map(item => (
             <SidebarMenuItem key={item.title}>
-              <SidebarMenuButton asChild>
-                <a href={item.url}>
+              <SidebarMenuButton isActive={pathname === item.url} asChild>
+                <Link href={item.url}>
                   <item.icon />
                   <span>{item.title}</span>
-                </a>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

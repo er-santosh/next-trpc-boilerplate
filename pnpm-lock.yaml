@@ -88,6 +88,9 @@ importers:
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
+      client-only:
+        specifier: ^0.0.1
+        version: 0.0.1
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -121,6 +124,9 @@ importers:
       react-dom:
         specifier: ^19.1.0
         version: 19.1.0(react@19.1.0)
+      react-error-boundary:
+        specifier: ^6.0.0
+        version: 6.0.0(react@19.1.0)
       react-hook-form:
         specifier: ^7.56.4
         version: 7.57.0(react@19.1.0)
@@ -136,6 +142,9 @@ importers:
       resend:
         specifier: ^4.5.1
         version: 4.5.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
       superjson:
         specifier: ^2.2.2
         version: 2.2.2
@@ -9478,6 +9487,14 @@ packages:
     peerDependencies:
       react: ^19.1.0
 
+  react-error-boundary@6.0.0:
+    resolution:
+      {
+        integrity: sha512-gdlJjD7NWr0IfkPlaREN2d9uUZUlksrfOx7SX62VRerwXbMY6ftGCIZua1VG1aXFNOimhISsTq+Owp725b9SiA==,
+      }
+    peerDependencies:
+      react: '>=16.13.1'
+
   react-hook-form@7.57.0:
     resolution:
       {
@@ -9916,6 +9933,12 @@ packages:
       }
     engines: { node: '>=10' }
     hasBin: true
+
+  server-only@0.0.1:
+    resolution:
+      {
+        integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==,
+      }
 
   set-cookie-parser@2.7.1:
     resolution:
@@ -17542,6 +17565,11 @@ snapshots:
       react: 19.1.0
       scheduler: 0.26.0
 
+  react-error-boundary@6.0.0(react@19.1.0):
+    dependencies:
+      '@babel/runtime': 7.27.6
+      react: 19.1.0
+
   react-hook-form@7.57.0(react@19.1.0):
     dependencies:
       react: 19.1.0
@@ -17838,6 +17866,8 @@ snapshots:
   semver@6.3.1: {}
 
   semver@7.7.2: {}
+
+  server-only@0.0.1: {}
 
   set-cookie-parser@2.7.1: {}
 

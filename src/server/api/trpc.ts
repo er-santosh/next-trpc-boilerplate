@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-
 /**
  * YOU PROBABLY DON'T NEED TO EDIT THIS FILE, UNLESS:
  * 1. You want to modify request context (see Part 1).
@@ -8,6 +6,8 @@
  * TL;DR - This is where all the tRPC server stuff is created and plugged in. The pieces you will
  * need to use are documented accordingly near the end.
  */
+import { cache } from 'react';
+
 import { headers } from 'next/headers';
 import type { NextRequest } from 'next/server';
 
@@ -41,7 +41,7 @@ interface CreateContextOptions {
  *
  * @see https://trpc.io/docs/server/context
  */
-export const createTRPCContext = async (opts: CreateContextOptions) => {
+export const createTRPCContext = cache(async (opts: CreateContextOptions) => {
   'use server';
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -52,7 +52,8 @@ export const createTRPCContext = async (opts: CreateContextOptions) => {
     session,
     db,
   };
-};
+});
+
 export type TRPCContext = Awaited<ReturnType<typeof createTRPCContext>>;
 
 /**
