@@ -13,10 +13,6 @@ export const env = createEnv({
       .optional()
       .transform(value => value === 'true'),
     DATABASE_URL: z.string().url(),
-    DB_MIGRATIONS_ENABLED: z
-      .enum(['true', 'false'])
-      .optional()
-      .transform(value => value === 'true'),
     BETTER_AUTH_SECRET: z.string(),
     GOOGLE_CLIENT_ID: z.string(),
     GOOGLE_CLIENT_SECRET: z.string(),
@@ -36,7 +32,6 @@ export const env = createEnv({
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     ANALYZE: process.env.ANALYZE,
     DATABASE_URL: process.env.DATABASE_URL,
-    DB_MIGRATIONS_ENABLED: process.env.DB_MIGRATIONS_ENABLED,
     BETTER_AUTH_SECRET: process.env.BETTER_AUTH_SECRET,
     GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
